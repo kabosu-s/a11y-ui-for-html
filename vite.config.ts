@@ -4,8 +4,8 @@ export default defineConfig({
 build: {
     lib: {
       entry: "src/main.ts",
-      name: "template",
-      fileName: "template",
+      name: "components",
+      fileName: "components",
       formats: ["iife"],
     },
   },

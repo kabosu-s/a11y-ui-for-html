@@ -22,7 +22,7 @@ export const createButton = ({
   onClick,
 }: ButtonProps) => {
   const btn = document.createElement('button');
-  btn.type = 'button';
+  btn.setAttribute('type', 'button');
   btn.innerText = label;
   if (onClick) {
     btn.addEventListener('click', onClick);

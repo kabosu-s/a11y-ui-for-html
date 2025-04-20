@@ -6,6 +6,11 @@
   font-weight: 700;
   line-height: 1;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  outline: none;
+}
+
+.storybook-button:focus {
+  outline: 2px solid #4a90e2;
 }
 .storybook-button--primary {
   background-color: #555ab9;

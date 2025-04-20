@@ -1,0 +1,28 @@
+.storybook-textfield {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.storybook-textfield label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.storybook-textfield input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.storybook-textfield input:focus {
+  outline: 2px solid #4a90e2;
+}
+
+.storybook-textfield__error {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 4px;
+}

@@ -1,0 +1,28 @@
+import { Title, Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as HeadStories from './index.stories';
+import * as  Css from "./headling.css";
+
+
+<Meta of={HeadStories} name="実装例"/>
+<Title />
+<Canvas />
+
+## CSS
+<Source code={`
+.header {
+  color: red;
+}
+`}
+language="css"
+/>
+
+## JavaScript
+<Source code={`
+function name() {
+  console.log("rete"
+  );
+}
+name();
+`}
+language="jsx"
+/>

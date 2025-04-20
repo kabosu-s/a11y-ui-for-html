@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { fn } from '@storybook/test';
 
-import type { ButtonProps } from './button';
-import { createButton } from './button';
+import type { ButtonProps } from './Button';
+import { createButton } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'Example/Button',
+  title: 'パーツ/Button',
   tags: ['autodocs'],
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
