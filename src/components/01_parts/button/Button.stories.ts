@@ -6,7 +6,7 @@ import { createButton } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'パーツ/Button',
+  title: 'Parts/Button',
   tags: ['autodocs'],
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
@@ -22,6 +22,9 @@ const meta = {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
     },
+    ariaLabel: { control: 'text' },
+    disabled: { control: 'boolean' },
+    pressed: { control: 'boolean' },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: { onClick: fn() },
@@ -34,26 +37,44 @@ type Story = StoryObj<ButtonProps>;
 export const Primary: Story = {
   args: {
     primary: true,
-    label: 'Button',
+    label: 'ボタンのらべる',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: 'Button',
+    label: 'セカンダリ',
   },
 };
 
 export const Large: Story = {
   args: {
+    primary: true,
     size: 'large',
-    label: 'Button',
+    label: '大きいボタン',
   },
 };
 
 export const Small: Story = {
   args: {
+    primary: true,
     size: 'small',
-    label: 'Button',
+    label: '小さいボタン',
+  },
+};
+
+export const WithAriaLabel: Story = {
+  args: {
+    primary: true,
+    label: '★',
+    ariaLabel: 'おすすめ',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    primary: true,
+    label: '無効なボタン',
+    disabled: true,
   },
 };

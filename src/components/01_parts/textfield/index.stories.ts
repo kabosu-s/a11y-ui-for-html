@@ -5,7 +5,7 @@ import type { TextfieldProps } from './Textfield';
 import { createTextfield } from './Textfield';
 
 const meta = {
-  title: 'パーツ/Textfield',
+  title: 'Parts/Textfield',
   tags: ['autodocs'],
   render: (args) => {
     return createTextfield(args);

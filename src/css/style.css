@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+
+/* =======================================
+
+  BROWSER RESET
+
+ ======================================= */
+html,
+body,
+div,
+span,
+nav,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+button,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+dialog,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-style: inherit;
+  font-weight: inherit;
+  background: transparent;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 1;
+  overflow-y: scroll;
+  font-family: var(--NotoSans);
+}
+
+strong {
+  font-weight: bold;
+}
+
+sup {
+  font-size: 70%;
+  vertical-align: super;
+}
+
+sub {
+  font-size: 70%;
+  vertical-align: sub;
+}
+
+ul {
+  list-style: none;
+}
+ol {
+  list-style-type: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption,
+th,
+td {
+  font-weight: normal;
+  text-align: left;
+  vertical-align: top;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: none;
+}
+
+/* form */
+input {
+  vertical-align: middle;
+  font-family: inherit;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  margin: 0;
+}
+
+textarea {
+  resize: vertical;
+  font-family: inherit;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select {
+  vertical-align: middle;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* for IE select */
+select::-ms-expand {
+  display: none;
+}
+
+/* for IE clear */
+input::-ms-clear {
+  display: none;
+}
+
+/* for IE password */
+input::-ms-reveal {
+  display: none;
+}
+
+option {
+  padding-right: 10px;
+}
+
+/* for iOS15 safari */
+input,
+button,
+select {
+  color: inherit;
+}
+
+input[type='search']::-webkit-search-decoration {
+  display: none;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+figure {
+  line-height: 0;
+}
+
+:root {
+  --Additional-Color-blue: #004788;
+  --Additional-Color-red: #f32c50;
+  --Additional-Color-yellow: #ffda55;
+  --Main-Color-LightBlue: #f0f8ff;
+  --Main-Color-Primary: #228fc0;
+  --Monotone-Gray: #707070;
+  --Monotone-LightGray: #c0c0c0;
+  --Monotone-Line: #d9d9d9;
+  --Monotone-black: #222;
+  --NotoSans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'メイリオ', sans-serif;
+}
+

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html';
 import { createHeadlogo } from './Headling';
 
 const meta = {
-  title: 'パーツ/Headd',
+  title: 'Parts/Headd',
   tags: ['autodocs'],
   render: () => createHeadlogo(),
 } satisfies Meta;
