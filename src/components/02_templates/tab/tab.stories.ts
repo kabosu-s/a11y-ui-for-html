@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/html";
 import { createTemplate, type TabProps } from ".";
 
 const meta = {
-  title: "テンプレート/Tab",
+  title: "Template/Tab",
   tags: ["autodocs"],
   render: (args) => {
     return createTemplate(args);

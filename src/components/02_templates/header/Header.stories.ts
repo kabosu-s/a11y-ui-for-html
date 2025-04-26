@@ -5,7 +5,7 @@ import type { HeaderProps } from './Header';
 import { createHeader } from './Header';
 
 const meta = {
-  title: 'テンプレート/Header',
+  title: 'Template/Header',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: (args) => createHeader(args),

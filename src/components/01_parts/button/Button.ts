@@ -49,10 +49,34 @@ export const createButton = ({
   
   // キーボード操作のサポート
   if (onClick) {
-    btn.addEventListener('click', onClick);
+    btn.addEventListener('click', () => {
+      // ボタンのdisabled状態を切り替え
+      const isDisabled = btn.hasAttribute('aria-disabled');
+      if (isDisabled) {
+        btn.removeAttribute('aria-disabled');
+        btn.disabled = false;
+        btn.removeAttribute('tabindex');
+      } else {
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        btn.setAttribute('tabindex', '-1');
+      }
+      onClick();
+    });
     btn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        // ボタンのdisabled状態を切り替え
+        const isDisabled = btn.hasAttribute('aria-disabled');
+        if (isDisabled) {
+          btn.removeAttribute('aria-disabled');
+          btn.disabled = false;
+          btn.removeAttribute('tabindex');
+        } else {
+          btn.setAttribute('aria-disabled', 'true');
+          btn.disabled = true;
+          btn.setAttribute('tabindex', '-1');
+        }
         onClick();
       }
     });

@@ -16,7 +16,13 @@ export const createTemplate = ({ tabs }: TabProps) => {
   const tabButtons = tabs
     .map((tab, index) => {
       return /* html */ `
-      <button class="tab__button js-tab__button" aria-controls="tab-${index}">${tab.label}</button>
+      <button 
+        class="tab_button js-tab_button" 
+        role="tab"
+        aria-selected="${index === 0 ? 'true' : 'false'}"
+        aria-controls="tab-${index}"
+        tabindex="0"
+      >${tab.label}</button>
     `;
     })
     .join("");
@@ -24,17 +30,23 @@ export const createTemplate = ({ tabs }: TabProps) => {
   const tabPanels = tabs
     .map((tab, index) => {
       return /* html */ `
-      <div class="tab__panel js-tab__panel" id="tab-${index}" aria-hidden="${index === 0 ? "false" : "true"}">${tab.content}</div>
+      <div 
+        class="tab_panel js-tab_panel" 
+        id="tab-${index}" 
+        role="tabpanel"
+        aria-labelledby="tab-${index}"
+        aria-hidden="${index === 0 ? "false" : "true"}"
+      >${tab.content}</div>
     `;
     })
     .join("");
 
   return /* html */ `
     <div class="tab js-tab">
-      <div class="tab__buttons">
+      <div class="tab_buttons" role="tablist">
         ${tabButtons}
       </div>
-      <div class="tab__panels">
+      <div class="tab_panels">
         ${tabPanels}
       </div>
     </div>
