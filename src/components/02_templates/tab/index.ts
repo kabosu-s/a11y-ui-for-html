@@ -17,7 +17,7 @@ export const createTemplate = ({ tabs }: TabProps) => {
     .map((tab, index) => {
       return /* html */ `
       <button 
-        class="tab_button js-tab_button" 
+        class="tab_btn js-tab_btn" 
         role="tab"
         aria-selected="${index === 0 ? 'true' : 'false'}"
         aria-controls="tab-${index}"
@@ -43,7 +43,7 @@ export const createTemplate = ({ tabs }: TabProps) => {
 
   return /* html */ `
     <div class="tab js-tab">
-      <div class="tab_buttons" role="tablist">
+      <div class="tab_btns" role="tablist">
         ${tabButtons}
       </div>
       <div class="tab_panels">

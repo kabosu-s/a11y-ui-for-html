@@ -1,0 +1,47 @@
+import { Title, Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as HeadStories from './index.stories';
+import * as  Css from "./button.css";
+
+
+<Meta of={HeadStories} name="実装例"/>
+<Title />
+<Canvas />
+
+## CSS
+<Source code={`
+.btn {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  align-items: center;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: auto;
+  border: 0;
+  outline: 2px solid transparent;
+  outline-offset: -1px;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+}
+
+.btn_primary {
+  background-color: var(--Additional-Color-blue);
+  color: #fff;
+  &:focus-within {
+    outline: 2px solid var(--Main-Color-Primary);
+    color: var(--Additional-Color-blue);
+    background-color: var(--Main-Color-LightBlue);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      outline: 2px solid var(--Main-Color-Primary);
+      color: var(--Additional-Color-blue);
+      background-color: var(--Main-Color-LightBlue);
+    }
+  }
+}
+`}
+language="css"
+/>

@@ -1,31 +1,31 @@
-.tab_panel[aria-hidden="true"] {
+.tab {
+  font-size: 1.6rem;
+}
+.tab_btns {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  border-bottom: 2px solid var(--Additional-Color-blue);
+}
+.tab_btn {
+  padding: 1rem;
+  background: #fff;
+  color: var(--Additional-Color-blue);
+  flex-grow: 1;
+  font-weight: bold;
+  border-radius: 0.75rem 0.75rem 0 0;
+  border-top: solid 2px var(--Additional-Color-blue);
+  border-bottom: none;
+  border-left: solid 2px var(--Additional-Color-blue);
+  border-right: solid 2px var(--Additional-Color-blue);
+}
+.tab_btn[aria-selected='true'] {
+  color: #fff;
+  background: var(--Additional-Color-blue);
+}
+.tab_panel[aria-hidden='true'] {
   display: none;
 }
-
-.tab_button {
-  position: relative;
-  padding: 0.5rem 1rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-.tab_button:focus-visible {
-  outline: 2px solid var(--Main-Color-Primary);
-  outline-offset: 2px;
-}
-
-.tab_button[aria-selected="true"] {
-  font-weight: bold;
-  border-bottom: 2px solid var(--Main-Color-Primary);
-}
-
-.tab_button[aria-selected="true"]::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--Main-Color-Primary);
+.tab_panel {
+  padding: 2rem;
 }

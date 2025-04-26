@@ -1,0 +1,145 @@
+import { Title, Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as HeadStories from './index.stories';
+import * as  Css from "./tab.css";
+
+
+<Meta of={HeadStories} name="実装例"/>
+<Title />
+<Canvas />
+## CSS
+<Source code={`
+.tab {
+  font-size: 1.6rem;
+}
+.tab_btns {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  border-bottom: 2px solid var(--Additional-Color-blue);
+}
+.tab_btn {
+  padding: 1rem;
+  background: #fff;
+  color: var(--Additional-Color-blue);
+  flex-grow: 1;
+  font-weight: bold;
+  border-radius: 0.75rem 0.75rem 0 0;
+  border-top: solid 2px var(--Additional-Color-blue);
+  border-bottom: none;
+  border-left: solid 2px var(--Additional-Color-blue);
+  border-right: solid 2px var(--Additional-Color-blue);
+}
+.tab_btn[aria-selected='true'] {
+  color: #fff;
+  background: var(--Additional-Color-blue);
+}
+.tab_panel[aria-hidden='true'] {
+  display: none;
+}
+`}
+language="css"
+/>
+
+## JavaScript（jQuery）
+<Source code={`
+$(document).ready(function () {
+	function closeAllTabs($buttons) {
+		$buttons.each(function () {
+			const $btn = $(this);
+			const panelId = $btn.attr("aria-controls");
+			$("#" + panelId)
+				.attr("aria-hidden", "true")
+				.hide();
+			$btn.attr("aria-selected", "false");
+		});
+	}
+
+	function openTab($button) {
+		const panelId = $button.attr("aria-controls");
+		const $panel = $("#" + panelId);
+		$panel.attr("aria-hidden", "false").show();
+
+		// ここで live領域に通知するテキストをアップデート（またはaria-live発火を確実にする）
+		$panel.attr("tabindex", "-1").focus(); // 追加: 切り替わったパネルにも一瞬フォーカス
+
+		$button.attr("aria-selected", "true");
+	}
+
+	function initTabs() {
+		const $tablists = $('[role="tablist"]');
+
+		$tablists.each(function () {
+			const $tablist = $(this);
+			const $buttons = $tablist.find('[role="tab"]');
+
+			// 初期化
+			$tablist.attr("aria-orientation", "horizontal");
+
+			$buttons.each(function (index) {
+				const $btn = $(this);
+				const panelId = $btn.attr("aria-controls");
+
+				$btn.attr({
+					"aria-selected": index === 0 ? "true" : "false",
+					tabindex: "0" // 常に0でOK
+				});
+
+				$("#" + panelId)
+					.attr("role", "tabpanel")
+					.attr("aria-labelledby", $btn.attr("id"))
+					.attr("aria-hidden", index === 0 ? "false" : "true")
+					.attr("aria-live", "polite") // 追加！ここでlive領域に
+					.toggle(index === 0); // 最初のタブだけ表示
+			});
+
+			// クリックイベント
+			$buttons.on("click", function () {
+				const $button = $(this);
+				closeAllTabs($buttons);
+				openTab($button);
+				$button.focus();
+			});
+
+			// キーボードイベント
+			$buttons.on("keydown", function (e) {
+				const $current = $(this);
+				const index = $buttons.index($current);
+				const nextIndex = index;
+
+				switch (e.key) {
+					case "ArrowRight":
+						nextIndex = (index + 1) % $buttons.length;
+						e.preventDefault();
+						$buttons.eq(nextIndex).focus();
+						break;
+					case "ArrowLeft":
+						nextIndex = (index - 1 + $buttons.length) % $buttons.length;
+						e.preventDefault();
+						$buttons.eq(nextIndex).focus();
+						break;
+					case "Home":
+						e.preventDefault();
+						$buttons.eq(0).focus();
+						break;
+					case "End":
+						e.preventDefault();
+						$buttons.eq($buttons.length - 1).focus();
+						break;
+					case "Enter":
+					case " ":
+						e.preventDefault();
+						closeAllTabs($buttons);
+						openTab($current);
+						break;
+					default:
+						break;
+				}
+			});
+		});
+	}
+
+	initTabs();
+});
+`}
+language="jsx"
+/>

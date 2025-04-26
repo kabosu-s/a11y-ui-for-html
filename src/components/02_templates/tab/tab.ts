@@ -1,97 +1,104 @@
-export const tab = () => {
-  const tabs = document.getElementsByClassName('js-tab') as HTMLCollectionOf<HTMLElement>;
 
-  if (!tabs) return;
-
-  const _closeAllTabs = (contents: HTMLCollectionOf<Element>, buttons: HTMLCollectionOf<Element>) => {
-    for (const content of Array.from(contents)) {
-      content.setAttribute('aria-hidden', 'true');
-    }
-    for (const button of Array.from(buttons)) {
-      button.setAttribute('aria-selected', 'false');
-    }
-  };
-
-  const _openTab = (tab: HTMLElement, targetId: string, button: Element) => {
-    const target = tab.querySelector(`#${targetId}`);
-
-    target?.setAttribute('aria-hidden', 'false');
-    button.setAttribute('aria-selected', 'true');
-  };
-
-  for (const tab of Array.from(tabs)) {
-    const tabButtons = tab.getElementsByClassName('js-tab_button');
-    const tabPanel = tab.getElementsByClassName('js-tab_panel');
-
-    // タブリストのロール設定
-    const tabList = tab.querySelector('.tab_buttons');
-    if (tabList) {
-      tabList.setAttribute('role', 'tablist');
-    }
-
-    // 初期状態の設定
-    const firstButton = tabButtons[0];
-    if (firstButton) {
-      firstButton.setAttribute('aria-selected', 'true');
-    }
-
-    for (const button of Array.from(tabButtons)) {
-      // タブボタンのロール設定
-      button.setAttribute('role', 'tab');
-      
-      // キーボード操作のサポート
-      button.addEventListener('keydown', (e: Event) => {
-        const keyboardEvent = e as KeyboardEvent;
-        const currentIndex = Array.from(tabButtons).indexOf(button);
-        let targetIndex;
-
-        switch (keyboardEvent.key) {
-          case 'ArrowRight':
-            keyboardEvent.preventDefault();
-            targetIndex = (currentIndex + 1) % tabButtons.length;
-            break;
-          case 'ArrowLeft':
-            keyboardEvent.preventDefault();
-            targetIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
-            break;
-          case 'Home':
-            keyboardEvent.preventDefault();
-            targetIndex = 0;
-            break;
-          case 'End':
-            keyboardEvent.preventDefault();
-            targetIndex = tabButtons.length - 1;
-            break;
-          case 'Enter':
-            keyboardEvent.preventDefault();
-            const targetId = button.getAttribute('aria-controls');
-            if (targetId) {
-              _closeAllTabs(tabPanel, tabButtons);
-              _openTab(tab, targetId, button);
-            }
-            return;
-          default:
-            return;
+export const tab = (): void => {
+  const closeAllTabs = (buttons: NodeListOf<HTMLButtonElement>): void => {
+    buttons.forEach((button) => {
+      const panelId = button.getAttribute("aria-controls");
+      if (panelId) {
+        const panel = document.getElementById(panelId);
+        if (panel) {
+          panel.setAttribute("aria-hidden", "true");
+          panel.style.display = "none";
         }
+      }
+      button.setAttribute("aria-selected", "false");
+    });
+  };
 
-        const targetButton = tabButtons[targetIndex];
-        const targetId = targetButton.getAttribute('aria-controls');
+  const openTab = (button: HTMLButtonElement): void => {
+    const panelId = button.getAttribute("aria-controls");
+    if (panelId) {
+      const panel = document.getElementById(panelId);
+      if (panel) {
+        panel.setAttribute("aria-hidden", "false");
+        panel.style.display = "block";
+        panel.setAttribute("tabindex", "-1");
+        panel.focus();
+      }
+    }
+    button.setAttribute("aria-selected", "true");
+  };
 
-        if (targetId) {
-          _closeAllTabs(tabPanel, tabButtons);
-          _openTab(tab, targetId, targetButton);
-          (targetButton as HTMLElement).focus();
+  const initTabs = (): void => {
+    const tablists = document.querySelectorAll<HTMLElement>('[role="tablist"]');
+
+    tablists.forEach((tablist) => {
+      const buttons = tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+
+      tablist.setAttribute("aria-orientation", "horizontal");
+
+      buttons.forEach((button, index) => {
+        const panelId = button.getAttribute("aria-controls");
+        button.setAttribute("aria-selected", index === 0 ? "true" : "false");
+        button.setAttribute("tabindex", "0"); // すべて0に統一
+
+        if (panelId) {
+          const panel = document.getElementById(panelId);
+          if (panel) {
+            panel.setAttribute("role", "tabpanel");
+            panel.setAttribute("aria-labelledby", button.id);
+            panel.setAttribute("aria-hidden", index === 0 ? "false" : "true");
+            panel.setAttribute("aria-live", "polite");
+            panel.style.display = index === 0 ? "block" : "none";
+          }
         }
       });
 
-      button.addEventListener('click', () => {
-        const targetId = button.getAttribute('aria-controls');
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          closeAllTabs(buttons);
+          openTab(button);
+          button.focus();
+        });
 
-        if (!targetId) return;
+        button.addEventListener("keydown", (e: KeyboardEvent) => {
+          const key = e.key;
+          const currentIndex = Array.from(buttons).indexOf(button);
+          let newIndex = currentIndex;
 
-        _closeAllTabs(tabPanel, tabButtons);
-        _openTab(tab, targetId, button);
+          switch (key) {
+            case "ArrowRight":
+              newIndex = (currentIndex + 1) % buttons.length;
+              e.preventDefault();
+              buttons[newIndex].focus();
+              break;
+            case "ArrowLeft":
+              newIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+              e.preventDefault();
+              buttons[newIndex].focus();
+              break;
+            case "Home":
+              newIndex = 0;
+              e.preventDefault();
+              buttons[newIndex].focus();
+              break;
+            case "End":
+              newIndex = buttons.length - 1;
+              e.preventDefault();
+              buttons[newIndex].focus();
+              break;
+            case "Enter":
+            case " ":
+              e.preventDefault();
+              closeAllTabs(buttons);
+              openTab(button);
+              break;
+            default:
+              break;
+          }
+        });
       });
-    }
-  }
+    });
+  };
+
+  initTabs();
 };
