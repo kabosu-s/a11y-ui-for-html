@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/html';
-import { fn } from '@storybook/test';
 
 import type { TextfieldProps } from './Textfield';
 import { createTextfield } from './Textfield';
 
 const meta = {
-  title: 'Parts/Textfield',
+  title: 'Component/Form/Textfield',
   tags: ['autodocs'],
   render: (args) => {
     return createTextfield(args);

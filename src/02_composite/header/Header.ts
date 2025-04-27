@@ -1,5 +1,5 @@
-import { createButton } from '../../01_parts/button/Button';
-import { createHeadlogo } from '../../01_parts/heading/Headling';
+import { createButton } from '../../01_component/button/Button';
+import { createHeadlogo } from '../../01_component/heading/Headling';
 import './header.css';
 
 export interface HeaderProps {
@@ -11,17 +11,15 @@ export interface HeaderProps {
 
 export const createHeader = ({ user, onLogout, onLogin, onCreateAccount }: HeaderProps) => {
   const header = document.createElement('header');
-
   const wrapper = document.createElement('div');
-  wrapper.className = 'storybook-header';
+  wrapper.className = 'sb_header';
 
-  const logo = createHeadlogo();
-
+  const logo = createHeadlogo({ name: 'LOGO'});
   wrapper.insertAdjacentHTML('afterbegin', logo);
-
   const account = document.createElement('div');
+  account.className = 'sb_account';
   if (user) {
-    const welcomeMessage = `<span class="welcome">Welcome, <b>${user.name}</b>!</span>`;
+    const welcomeMessage = `<span class="welcome">${user.name}</span>`;
     account.innerHTML = welcomeMessage;
     account.appendChild(createButton({ size: 'small', label: 'Log out', onClick: onLogout }));
   } else {

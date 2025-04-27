@@ -1,6 +1,14 @@
+import "./tab.css";
 
-export const tab = (): void => {
-  const closeAllTabs = (buttons: NodeListOf<HTMLButtonElement>): void => {
+export interface TabProps {
+  tabs: {
+    label: string;
+    content: string;
+  }[];
+}
+
+export const tab = () => {
+  const closeAllTabs = (buttons: NodeListOf<HTMLButtonElement>) => {
     buttons.forEach((button) => {
       const panelId = button.getAttribute("aria-controls");
       if (panelId) {
@@ -14,7 +22,7 @@ export const tab = (): void => {
     });
   };
 
-  const openTab = (button: HTMLButtonElement): void => {
+  const openTab = (button: HTMLButtonElement) => {
     const panelId = button.getAttribute("aria-controls");
     if (panelId) {
       const panel = document.getElementById(panelId);
@@ -28,7 +36,7 @@ export const tab = (): void => {
     button.setAttribute("aria-selected", "true");
   };
 
-  const initTabs = (): void => {
+  const initTabs = () => {
     const tablists = document.querySelectorAll<HTMLElement>('[role="tablist"]');
 
     tablists.forEach((tablist) => {
@@ -101,4 +109,49 @@ export const tab = (): void => {
   };
 
   initTabs();
+};
+
+export const createTemplate = ({ tabs }: TabProps) => {
+  queueMicrotask(() => {
+    tab();
+  })
+
+  const tabButtons = tabs
+    .map((tab, index) => {
+      return /* html */ `
+      <button 
+        class="tab_btn js-tab_btn" 
+        role="tab"
+        aria-selected="${index === 0 ? 'true' : 'false'}"
+        aria-controls="tab-${index}"
+        tabindex="0"
+      >${tab.label}</button>
+    `;
+    })
+    .join("");
+
+  const tabPanels = tabs
+    .map((tab, index) => {
+      return /* html */ `
+      <div 
+        class="tab_panel js-tab_panel" 
+        id="tab-${index}" 
+        role="tabpanel"
+        aria-labelledby="tab-${index}"
+        aria-hidden="${index === 0 ? "false" : "true"}"
+      >${tab.content}</div>
+    `;
+    })
+    .join("");
+
+  return /* html */ `
+    <div class="tab js-tab">
+      <div class="tab_btns" role="tablist">
+        ${tabButtons}
+      </div>
+      <div class="tab_panels">
+        ${tabPanels}
+      </div>
+    </div>
+  `;
 };

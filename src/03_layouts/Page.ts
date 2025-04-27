@@ -1,4 +1,4 @@
-import { createHeader } from '../02_templates/header/Header';
+import { createHeader } from '../02_composite/header/Header';
 import './page.css';
 
 type User = {
@@ -6,12 +6,12 @@ type User = {
 };
 
 export const createPage = () => {
-  const article = document.createElement('article');
+  const article = document.createElement('div');
   let user: User | undefined;
   let header: HTMLElement | null = null;
 
   const rerenderHeader = () => {
-    const wrapper = document.getElementsByTagName('article')[0];
+    const wrapper = document.getElementsByTagName('div')[0];
     wrapper.replaceChild(createHeaderElement(), wrapper.firstChild as HTMLElement);
   };
 

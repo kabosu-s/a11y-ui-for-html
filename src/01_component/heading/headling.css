@@ -1,0 +1,6 @@
+.header {
+  color: var(--Main-Color-Primary);
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: var(--font-family-heading);
+}

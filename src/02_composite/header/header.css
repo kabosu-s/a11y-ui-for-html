@@ -1,0 +1,23 @@
+.sb_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+.sb_header h1 {
+  display: inline-block;
+  vertical-align: top;
+  margin: auto 0 auto 1.5rem;
+}
+.sb_account {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sb_header .welcome {
+  color: #333;
+  font-size: 1.4rem;
+}

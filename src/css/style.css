@@ -222,10 +222,6 @@ input[type='search']::-webkit-search-decoration {
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-}
-
 figure {
   line-height: 0;
 }

@@ -13,6 +13,9 @@ const config: StorybookConfig = {
   "framework": {
     "name": "@storybook/html-vite",
     "options": {}
-  }
+  },
+  "docs": {
+    defaultName: 'ドキュメント',
+  },
 };
 export default config;
