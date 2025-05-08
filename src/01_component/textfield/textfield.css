@@ -1,28 +1,30 @@
-.storybook-textfield {
+.textfield {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.storybook-textfield label {
+.textfield label {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 4px;
 }
 
-.storybook-textfield input {
+.textfield input {
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--Monotone-Line);
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1.6rem;
 }
 
-.storybook-textfield input:focus {
-  outline: 2px solid #4a90e2;
+.textfield input:focus {
+  outline: 2px solid var(--Main-Color-Primary);
 }
 
-.storybook-textfield__error {
-  color: #ff0000;
-  font-size: 12px;
-  margin-top: 4px;
+.textfield_error {
+  color: var(--Additional-Color-red);
+  font-size: 1.2rem;
 }
+
+

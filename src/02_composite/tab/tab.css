@@ -18,7 +18,19 @@
   border-bottom: none;
   border-left: solid 2px var(--Additional-Color-blue);
   border-right: solid 2px var(--Additional-Color-blue);
+  transition: all 0.3s ease-out;
+  &:focus-within {
+    color: var(--Additional-Color-blue);
+    background-color: var(--Main-Color-LightBlue);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: var(--Additional-Color-blue);
+      background-color: var(--Main-Color-LightBlue);
+    }
+  }
 }
+
 .tab_btn[aria-selected='true'] {
   color: #fff;
   background: var(--Additional-Color-blue);

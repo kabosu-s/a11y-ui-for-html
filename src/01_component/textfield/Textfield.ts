@@ -34,7 +34,7 @@ export const createTextfield = ({
   errorMessage,
 }: TextfieldProps) => {
   const textfield = document.createElement('div');
-  textfield.className = 'storybook-textfield';
+  textfield.className = 'textfield';
 
   const id = `textfield-${Math.random().toString(36).substring(2, 15)}`;
 
@@ -55,16 +55,17 @@ export const createTextfield = ({
   if (disabled) {
     inputElement.setAttribute('aria-disabled', 'true');
   }
+  textfield.appendChild(inputElement);
+
   if (errorMessage) {
     const errorMessageId = `${id}-error`;
     inputElement.setAttribute('aria-describedby', errorMessageId);
     const errorMessageElement = document.createElement('div');
-    errorMessageElement.className = 'storybook-textfield__error';
+    errorMessageElement.className = 'textfield_error';
     errorMessageElement.innerText = errorMessage;
     errorMessageElement.id = errorMessageId;
     textfield.appendChild(errorMessageElement);
   }
-  textfield.appendChild(inputElement);
 
   return textfield;
 };

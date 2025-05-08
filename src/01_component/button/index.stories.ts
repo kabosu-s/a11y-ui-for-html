@@ -7,6 +7,9 @@ import { createButton, type ButtonProps } from './Button';
 const meta: Meta<ButtonProps> = {
   title: 'Component/ボタン',
   tags: ['autodocs'],
+    parameters: {
+    layout: 'centered',
+  },
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
     // return `<div>${label}</div>`;

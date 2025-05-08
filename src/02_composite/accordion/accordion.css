@@ -1,0 +1,59 @@
+.accordion {
+  width: 100%;
+  max-width: 800px;
+  min-width: 600px;
+  margin: 0 auto;
+  font-size: 1.6rem;
+}
+
+.accordion_item {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.accordion_header {
+  padding: 2rem;
+  background-color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+  list-style: none;
+}
+
+.accordion_header::-webkit-details-marker {
+  display: none;
+}
+
+.accordion_header::after {
+  content: '';
+  width: 1.6rem;
+  height: 1.6rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center center;
+  background-size: contain;
+  transition: transform 0.3s ease-out;
+}
+
+.accordion_item[open] .accordion_header::after {
+  transform: rotate(180deg);
+}
+
+.accordion_header:hover {
+  background-color: #f3f4f6;
+}
+
+.accordion_content {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  overflow: clip;
+  transition: height 0.3s ease;
+  will-change: height;
+}
+
+.accordion_inner {
+  padding: 2rem;
+}
