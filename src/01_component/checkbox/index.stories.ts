@@ -1,38 +1,52 @@
-import { createCheckbox } from './Checkbox';
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { createCheckbox, CheckboxProps } from './Checkbox';
 
-export default {
+const meta: Meta<CheckboxProps> = {
   title: 'Component/Form/Checkbox',
-  component: createCheckbox,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
-};
-
-export const Default = {
-  args: {
-    label: '利用規約に同意する',
+  render: (args) => {
+    const checkbox = createCheckbox(args as CheckboxProps);
+    return checkbox;
+  },
+  argTypes: {
+    options: {
+      control: 'object',
+      description: 'チェックボックスのオプション',
+    },
   },
 };
 
-export const Required = {
+export default meta;
+type Story = StoryObj;
+
+export const Default: Story = {
   args: {
-    label: '利用規約に同意する',
-    required: true,
+    options: [
+      { label: 'オプション1', value: 'option1' },
+      { label: 'オプション2', value: 'option2' },
+      { label: 'オプション3', value: 'option3' },
+    ],
   },
 };
-
-export const Disabled = {
+export const Disabled: Story = {
   args: {
-    label: '利用規約に同意する',
-    disabled: true,
-  },
-};
-
-export const WithError = {
-  args: {
-    label: '利用規約に同意する',
-    required: true,
-    errorMessage: '必須項目です',
+    options: [
+      { label: 'オプション1', value: 'option1' },
+      { label: 'オプション2', value: 'option2', disabled: true },
+      { label: 'オプション3', value: 'option3' },
+    ],
   },
 }; 
+export const WithError: Story = {
+  args: {
+    options: [
+      { label: 'オプション1', value: 'option1' },
+      { label: 'オプション2', value: 'option2' },
+      { label: 'オプション3', value: 'option3' },
+    ],
+    errorMessage: 'エラーメッセージが表示されます',
+  },
+};

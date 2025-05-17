@@ -5,35 +5,35 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 1rem;
-  border-bottom: 2px solid var(--Additional-Color-blue);
+  border-bottom: 2px solid var(--Main-Color-Dark);
 }
 .tab_btn {
   padding: 1rem;
   background: #fff;
-  color: var(--Additional-Color-blue);
+  color: var(--Main-Color-Dark);
   flex-grow: 1;
   font-weight: bold;
   border-radius: 0.75rem 0.75rem 0 0;
-  border-top: solid 2px var(--Additional-Color-blue);
+  border-top: solid 2px var(--Main-Color-Dark);
   border-bottom: none;
-  border-left: solid 2px var(--Additional-Color-blue);
-  border-right: solid 2px var(--Additional-Color-blue);
+  border-left: solid 2px var(--Main-Color-Dark);
+  border-right: solid 2px var(--Main-Color-Dark);
   transition: all 0.3s ease-out;
   &:focus-within {
-    color: var(--Additional-Color-blue);
-    background-color: var(--Main-Color-LightBlue);
+    color: var(--Main-Color-Dark);
+    background-color: var(--Main-Color-Light);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      color: var(--Additional-Color-blue);
-      background-color: var(--Main-Color-LightBlue);
+      color: var(--Main-Color-Dark);
+      background-color: var(--Main-Color-Light);
     }
   }
 }
 
 .tab_btn[aria-selected='true'] {
   color: #fff;
-  background: var(--Additional-Color-blue);
+  background: var(--Main-Color-Dark);
 }
 .tab_panel[aria-hidden='true'] {
   display: none;

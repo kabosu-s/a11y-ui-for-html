@@ -1,15 +1,30 @@
-import { createRadio } from './Radio';
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { createRadio, RadioProps } from './Radio';
 
-export default {
+
+const meta: Meta<RadioProps> = {
   title: 'Component/Form/Radio',
-  component: createRadio,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
+  render: (args) => {
+    const radiobox = createRadio(args as RadioProps);
+    return radiobox;
+  },
+  argTypes: {
+    options: {
+      control: 'object',
+      description: 'ラジオボタンのオプション',
+    },
+  },
 };
 
-export const Default = {
+export default meta;
+type Story = StoryObj;
+
+
+export const Default: Story = {
   args: {
     name: 'gender',
     options: [
@@ -19,20 +34,7 @@ export const Default = {
     ],
   },
 };
-
-export const Required = {
-  args: {
-    name: 'gender',
-    options: [
-      { value: 'male', label: '男性' },
-      { value: 'female', label: '女性' },
-      { value: 'other', label: 'その他' },
-    ],
-    required: true,
-  },
-};
-
-export const Disabled = {
+export const Disabled: Story = {
   args: {
     name: 'gender',
     options: [
@@ -43,8 +45,7 @@ export const Disabled = {
     disabled: true,
   },
 };
-
-export const WithError = {
+export const WithError: Story = {
   args: {
     name: 'gender',
     options: [
@@ -56,14 +57,3 @@ export const WithError = {
     errorMessage: '性別を選択してください',
   },
 };
-
-export const WithDefaultValue = {
-  args: {
-    name: 'gender',
-    options: [
-      { value: 'male', label: '男性' },
-      { value: 'female', label: '女性', checked: true },
-      { value: 'other', label: 'その他' },
-    ],
-  },
-}; 

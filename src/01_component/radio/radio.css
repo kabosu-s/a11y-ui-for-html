@@ -1,31 +1,62 @@
-.radio {
+.radio_group {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-size: 1.6rem;
+  flex-flow: row wrap;
+  width: 100%;
+  gap: 2rem;
 }
 
-.radio_option {
+.radio_item input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.radio_item label {
+  cursor: pointer;
   display: flex;
   align-items: center;
+  gap: 0.6rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
 }
 
-.radio_option input[type="radio"] {
-  margin-right: 0.5rem;
-}
-
-.radio .required {
-  color: #dc2626;
-  background-color: #ffffff;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.2rem;
-  font-size: 0.75rem;
-  margin-right: 0.25rem;
+.radio_item label::before {
+  content: '';
   display: inline-block;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0.2rem solid var(--Base-Black);
+  border-radius: 1.6rem;
+  transition: all 0.1s ease;
+}
+
+.radio_item input[type='radio']:checked + label::before {
+  background: radial-gradient(circle at center, var(--Main-Color-Base) 50%, var(--Base-Lightest) 51%);
+}
+.radio_item input[type='radio']:focus + label::before {
+  outline: 0.2rem solid var(--Base-Black);
+  outline-offset: 0.1rem;
+}
+
+.radio_item input[type='radio']:disabled + label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.radio_item input[type='radio']:disabled + label::before {
+  border-color: var( --Base-LightGray);
+  background-color: var( --Base-Lightest);
 }
 
 .radio_error {
-  color: #dc2626;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-} 
+  color: var(--Error-Color);
+  font-size: 1.4rem;
+  width: 100%;
+  display: block;
+}

@@ -41,18 +41,18 @@ export const createRadio = ({
   disabled,
   errorMessage,
 }: RadioProps) => {
-  const radio = document.createElement('fieldset');
-  radio.className = 'radio';
-  radio.setAttribute('role', 'radiogroup');
+  const radioGroup = document.createElement('div');
+  radioGroup.className = 'radio_group';
+  radioGroup.setAttribute('role', 'radiogroup');
 
   if (errorMessage) {
-    radio.setAttribute('aria-describedby', `${name}-error`);
+    radioGroup.setAttribute('aria-describedby', `${name}-error`);
   }
 
   const radioOptions = options.map((option, index) => {
     const id = `radio-${name}-${index}`;
     const radioOption = document.createElement('div');
-    radioOption.className = 'radio_option';
+    radioOption.className = 'radio_item';
 
     const inputElement = document.createElement('input');
     inputElement.type = 'radio';
@@ -74,15 +74,15 @@ export const createRadio = ({
     return radioOption;
   });
 
-  radioOptions.forEach(option => radio.appendChild(option));
+  radioOptions.forEach(option => radioGroup.appendChild(option));
 
   if (errorMessage) {
     const errorMessageElement = document.createElement('div');
     errorMessageElement.className = 'radio_error';
     errorMessageElement.innerText = errorMessage;
     errorMessageElement.id = `${name}-error`;
-    radio.appendChild(errorMessageElement);
+    radioGroup.appendChild(errorMessageElement);
   }
 
-  return radio;
+  return radioGroup;
 }; 

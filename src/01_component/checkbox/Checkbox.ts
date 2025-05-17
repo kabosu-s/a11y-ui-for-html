@@ -1,14 +1,25 @@
 import './checkbox.css';
 
-export interface CheckboxProps {
+export interface CheckboxOption {
   /**
    * チェックボックスのラベル
    */
   label: string;
   /**
+   * チェックボックスの値
+   */
+  value: string;
+  /**
    * チェックボックスが無効かどうか
    */
   disabled?: boolean;
+}
+
+export interface CheckboxProps {
+  /**
+   * チェックボックスのオプション
+   */
+  options: CheckboxOption[];
   /**
    * チェックボックスのエラーメッセージ
    */
@@ -19,38 +30,47 @@ export interface CheckboxProps {
  * チェックボックスコンポーネント
  */
 export const createCheckbox = ({
-  label,
-  disabled,
+  options,
   errorMessage,
 }: CheckboxProps) => {
-  const checkbox = document.createElement('div');
-  checkbox.className = 'checkbox';
+  const checkboxGroup = document.createElement('div');
+  checkboxGroup.className = 'checkbox_group';
 
-  const id = `checkbox-${Math.random().toString(36).substring(2, 15)}`;
+  const groupId = `checkbox-group-${Math.random().toString(36).substring(2, 15)}`;
 
-  const inputElement = document.createElement('input');
-  inputElement.type = 'checkbox';
-  inputElement.id = id;
-  inputElement.disabled = disabled || false;
-  if (disabled) {
-    inputElement.setAttribute('aria-disabled', 'true');
-  }
-  checkbox.appendChild(inputElement);
+  options.forEach((option) => {
+    const checkbox = document.createElement('div');
+    checkbox.className = 'checkbox';
 
-  const labelElement = document.createElement('label');
-  labelElement.appendChild(document.createTextNode(label));
-  labelElement.setAttribute('for', id);
-  checkbox.appendChild(labelElement);
+    const id = `${groupId}-${option.value}`;
+
+    const inputElement = document.createElement('input');
+    inputElement.type = 'checkbox';
+    inputElement.id = id;
+    inputElement.value = option.value;
+    inputElement.disabled = option.disabled || false;
+    if (option.disabled) {
+      inputElement.setAttribute('aria-disabled', 'true');
+    }
+    checkbox.appendChild(inputElement);
+
+    const labelElement = document.createElement('label');
+    labelElement.appendChild(document.createTextNode(option.label));
+    labelElement.setAttribute('for', id);
+    checkbox.appendChild(labelElement);
+
+    checkboxGroup.appendChild(checkbox);
+  });
 
   if (errorMessage) {
-    const errorMessageId = `${id}-error`;
-    inputElement.setAttribute('aria-describedby', errorMessageId);
+    const errorMessageId = `${groupId}-error`;
+    checkboxGroup.setAttribute('aria-describedby', errorMessageId);
     const errorMessageElement = document.createElement('div');
     errorMessageElement.className = 'checkbox_error';
     errorMessageElement.innerText = errorMessage;
     errorMessageElement.id = errorMessageId;
-    checkbox.appendChild(errorMessageElement);
+    checkboxGroup.appendChild(errorMessageElement);
   }
 
-  return checkbox;
+  return checkboxGroup;
 }; 

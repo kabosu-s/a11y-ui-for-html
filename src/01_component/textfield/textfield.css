@@ -13,17 +13,17 @@
 
 .textfield input {
   padding: 8px;
-  border: 1px solid var(--Monotone-Line);
+  border: 1px solid var(--Base-Light);
   border-radius: 4px;
   font-size: 1.6rem;
 }
 
 .textfield input:focus {
-  outline: 2px solid var(--Main-Color-Primary);
+  outline: 2px solid var(--Main-Color-Base);
 }
 
 .textfield_error {
-  color: var(--Additional-Color-red);
+  color: var(--Error-Color);
   font-size: 1.2rem;
 }
 
