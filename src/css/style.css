@@ -227,15 +227,19 @@ figure {
 }
 
 :root {
-  --Additional-Color-blue: #0065c3;
-  --Additional-Color-red: #de0930;
-  --Additional-Color-yellow: #ffda55;
-  --Main-Color-LightBlue: #f0f8ff;
-  --Main-Color-Primary: #008ac1;
-  --Monotone-Gray: #707070;
-  --Monotone-LightGray: #c0c0c0;
-  --Monotone-Line: #d9d9d9;
-  --Monotone-black: #222;
+  --Error-Color: #de0930;
+  --Secondary-Color-Base: #ffda55;
+
+  --Main-Color-Light: #f0f8ff;
+  --Main-Color-Base: #008ac1;
+  --Main-Color-Dark: #0065c3;
+
+  --Base-Lightest: #f7f7f7;
+  --Base-LightGray: #c0c0c0;
+  --Base-Light: #d9d9d9;
+  --Base-Gray: #707070;
+  --Base-Black: #333;
+
   --NotoSans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'メイリオ', sans-serif;
 }
 
