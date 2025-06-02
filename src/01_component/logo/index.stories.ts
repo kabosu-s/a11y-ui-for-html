@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { createHeadlogo, type LogoProps } from './Headling';
 
-const meta: Meta<LogoProps> = {
+const meta = {
   title: 'Component/ロゴ',
-    tags: ['autodocs'],
   render: (args) => createHeadlogo(args),
-};
+}satisfies Meta<LogoProps>;
 
 export default meta;
 type Story = StoryObj<LogoProps>;

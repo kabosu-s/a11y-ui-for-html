@@ -3,15 +3,15 @@ import { expect, userEvent, within } from '@storybook/test';
 
 import { createPage } from './Page';
 
-const meta:Meta = {
+const meta = {
   title: 'Layout/Page',
-  render: () => createPage(),
   tags: ['autodocs'],
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-};
+  render: () => createPage(),
+}satisfies Meta;
 
 export default meta;
 

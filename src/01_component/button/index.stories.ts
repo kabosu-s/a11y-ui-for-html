@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { fn } from '@storybook/test';
-
 import { createButton, type ButtonProps } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<ButtonProps> = {
+const meta = {
   title: 'Component/ボタン',
   tags: ['autodocs'],
-    parameters: {
+  parameters: {
     layout: 'centered',
   },
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
     // return `<div>${label}</div>`;
-    return createButton(args);
+    return createButton(args as ButtonProps);
   },
   argTypes: {
     backgroundColor: { control: 'color' },
@@ -29,7 +28,7 @@ const meta: Meta<ButtonProps> = {
     pressed: { control: 'boolean' },
   },
   args: { onClick: fn() },
-};
+}satisfies Meta<ButtonProps>;
 
 export default meta;
 type Story = StoryObj<ButtonProps>;

@@ -1,0 +1,86 @@
+.btn_area {
+  width: 100%;
+  padding: 200px 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.modal.visible {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal.hiding {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.dialog {
+  position: relative;
+  background: var(--Base-Lightest);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close_btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--Base-Gray);
+}
+
+.body {
+  font-size: 1.6rem;
+}
+
+.footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.hidden {
+  display: none;
+}
+.modal {
+  z-index: 1000;
+}
+.modal:nth-of-type(2) {
+  z-index: 1100;
+}

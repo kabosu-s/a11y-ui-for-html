@@ -31,7 +31,7 @@
   display: inline-block;
   width: 1.6rem;
   height: 1.6rem;
-  border: 0.2rem solid var(--Base-Black);
+  border: 0.1rem solid var(--Base-Light);
   border-radius: 1.6rem;
   transition: all 0.1s ease;
 }
@@ -40,7 +40,7 @@
   background: radial-gradient(circle at center, var(--Main-Color-Base) 50%, var(--Base-Lightest) 51%);
 }
 .radio_item input[type='radio']:focus + label::before {
-  outline: 0.2rem solid var(--Base-Black);
+  outline: 0.2rem solid var(--Base-Light);
   outline-offset: 0.1rem;
 }
 

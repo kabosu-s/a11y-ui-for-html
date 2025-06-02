@@ -37,16 +37,36 @@
   &:focus-within {
     outline: 2px solid var(--Secondary-Color-Base);
     color: var(--Base-Black);
-    background-color: #fffdf5;
+    background-color: var(--Base-Lightest);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       outline: 2px solid var(--Secondary-Color-Base);
       color: var(--Base-Black);
-      background-color: #fffdf5;
+      background-color: var(--Base-Lightest);
     }
   }
 }
+
+.btn_cancel {
+  background-color: var(--Base-LightGray);
+  color: var(--Base-Black);
+  &:focus-within {
+    outline: 2px solid var(--Base-LightGray);
+    color: var(--Base-Black);
+    background-color: var(--Base-Lightest);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      outline: 2px solid var(--Base-LightGray);
+      color: var(--Base-Black);
+      background-color: var(--Base-Lightest);
+    }
+  }
+}
+
+
+
 .btn_small {
   padding: 0.8rem 1.6rem;
   font-size: 1.4rem;

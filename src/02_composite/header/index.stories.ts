@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { fn } from '@storybook/test';
-
-import type { HeaderProps } from './Header';
-import { createHeader } from './Header';
+import { createHeader, type HeaderProps } from './Header';
 
 const meta = {
-  title: 'Composite/Header',
+  title: 'Composite/ヘッダー',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-  render: (args) => createHeader(args),
+  render: (args) => {
+    return createHeader(args as HeaderProps);
+  },
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',

@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { createCheckbox, CheckboxProps } from './Checkbox';
+import { createCheckbox, type CheckboxProps } from './Checkbox';
 
-const meta: Meta<CheckboxProps> = {
+const meta = {
   title: 'Component/Form/Checkbox',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
   render: (args) => {
-    const checkbox = createCheckbox(args as CheckboxProps);
-    return checkbox;
+    return createCheckbox(args as CheckboxProps);
   },
   argTypes: {
     options: {
@@ -17,10 +16,10 @@ const meta: Meta<CheckboxProps> = {
       description: 'チェックボックスのオプション',
     },
   },
-};
+}satisfies Meta<CheckboxProps>;
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<CheckboxProps>;
 
 export const Default: Story = {
   args: {
@@ -47,6 +46,6 @@ export const WithError: Story = {
       { label: 'オプション2', value: 'option2' },
       { label: 'オプション3', value: 'option3' },
     ],
-    errorMessage: 'エラーメッセージが表示されます',
+    errorMessage: '必須項目です',
   },
 };

@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { createRadio, RadioProps } from './Radio';
+import { createRadio, type RadioProps } from './Radio';
 
 
-const meta: Meta<RadioProps> = {
+const meta = {
   title: 'Component/Form/Radio',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
   render: (args) => {
-    const radiobox = createRadio(args as RadioProps);
-    return radiobox;
+    return createRadio(args as RadioProps);
   },
   argTypes: {
     options: {
@@ -18,7 +17,7 @@ const meta: Meta<RadioProps> = {
       description: 'ラジオボタンのオプション',
     },
   },
-};
+}satisfies Meta<RadioProps>;
 
 export default meta;
 type Story = StoryObj;

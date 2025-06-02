@@ -1,13 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/html';
-
-import type { TextfieldProps } from './Textfield';
-import { createTextfield } from './Textfield';
+import { createTextfield, type TextfieldProps } from './Textfield';
 
 const meta = {
   title: 'Component/Form/Textfield',
   tags: ['autodocs'],
   render: (args) => {
-    return createTextfield(args);
+    return createTextfield(args as TextfieldProps);
   },
   argTypes: {
     label: { control: 'text' },
@@ -17,7 +15,7 @@ const meta = {
     errorMessage: { control: 'text' },
   },
   args: {},
-} satisfies Meta<TextfieldProps>;
+}satisfies Meta<TextfieldProps>;
 
 export default meta;
 type Story = StoryObj<TextfieldProps>;

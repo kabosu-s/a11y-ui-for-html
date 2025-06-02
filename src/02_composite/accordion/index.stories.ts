@@ -1,15 +1,23 @@
-import { createAccordion } from './Accordion';
+import type { Meta, StoryObj } from "@storybook/html";
+import { createAccordion, type AccordionProps  } from './Accordion';
 
-export default {
+
+const meta  = {
   title: 'Composite/アコーディオン',
-  component: createAccordion,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
-};
+  render: (args) => {
+    return createAccordion(args as AccordionProps);
+  },
+} satisfies Meta<AccordionProps>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<AccordionProps>;
+
+
+export const Default: Story = {
   args: {
     items: [
       {
@@ -28,7 +36,7 @@ export const Default = {
   },
 };
 
-export const WithExpanded = {
+export const WithExpanded: Story = {
   args: {
     items: [
       {

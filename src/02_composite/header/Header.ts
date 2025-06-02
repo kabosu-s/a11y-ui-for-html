@@ -1,5 +1,5 @@
 import { createButton } from '../../01_component/button/Button';
-import { createHeadlogo } from '../../01_component/heading/Headling';
+import { createHeadlogo } from '../../01_component/logo/Headling';
 import './header.css';
 
 export interface HeaderProps {
