@@ -1,0 +1,50 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import './css/style.css';
+
+
+<Meta title="Information" />
+<main>
+  <div className='sb-section-title'>
+    # E2 UI SAMPLE について
+    <p>アクセシビリティに配慮したUIコンポーネントのサンプル集です。</p>
+  </div>
+
+  <section className="sb-section">
+    <h2 className="sb-section-item-heading">使い方</h2>
+    <div className="sb-section-item-paragraph">
+      <p>アクセシビリティに配慮したUIのコーディング例を掲載しています。コードページにjQueryでの実装例などを掲載していますので、必要に応じて参照、ご利用ください。</p>
+    </div>
+  </section>
+  <section className="sb-section">
+    <h2 className="sb-section-item-heading">フィードバック</h2>
+    <div className="sb-section-item-paragraph">
+      <p>誤字脱字や内容の妥当性、推薦など、さまざまな観点からのフィードバックを歓迎しています。フィードバックを送るには、(検討中.redmineとかにチケット起票)。</p>
+    </div>
+  </section>
+</main>
+
+<style>
+  {`
+  .sb-section {
+    width: 100%;
+    margin-bottom: 8rem;
+  }
+  .sb-section-title {
+    margin-bottom: 8rem;
+  }
+  .sb-section-title h1 {
+    color: var(--Main-Color-Base);
+    margin-bottom: 4rem;
+  }
+  .sb-section-item-heading {
+    padding-bottom: 1.6rem;
+    margin: 0 0 2.4rem;
+    display: block;
+    color: var(--Main-Color-Base);
+  }
+  .sb-section-title p,
+  .sb-section p {
+    font-size: 1.6rem;
+  }
+  `}
+</style>

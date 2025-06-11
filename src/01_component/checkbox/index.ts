@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { createCheckbox, type CheckboxProps } from './Checkbox';
 
 const meta = {
-  title: 'Component/Form/Checkbox',
+  title: 'Component/フォーム/チェックボックス',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',

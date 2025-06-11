@@ -1,9 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/html";
+import type { Meta, StoryObj } from "@storybook/html-vite";
 import { createTemplate, type TabProps } from "./tab";
 
 const meta = {
   title: "Composite/タブ",
-  tags: ["autodocs"],
+  parameters: {
+    layout: 'centered',
+  },
   render: (args) => {
     return createTemplate(args);
   },
@@ -16,16 +18,16 @@ export const Primary: Story = {
   args: {
     tabs: [
       {
-        label: "Tab 1",
-        content: "Content 1",
+        label: "タブ 1",
+        content: "タブ1のコンテンツです。",
       },
       {
-        label: "Tab 2",
-        content: "Content 2",
+        label: "タブ 2",
+        content: "タブ2のコンテンツです。",
       },
       {
-        label: "Tab 3",
-        content: "Content 3",
+        label: "タブ 3",
+        content: "タブ3のコンテンツです。",
       },
     ],
   },

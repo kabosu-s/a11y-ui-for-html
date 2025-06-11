@@ -1,15 +1,15 @@
 .btn_area {
   width: 100%;
-  padding: 200px 3%;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
 }
 .modal {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  display: none;
   position: fixed;
   inset: 0;
   width: 100%;
@@ -23,12 +23,11 @@
   opacity: 1;
   pointer-events: auto;
 }
-
-.modal.hiding {
+.modal[aria-hidden="true"] {
+  display: none;
   opacity: 0;
   pointer-events: none;
 }
-
 .overlay {
   position: absolute;
   width: 100%;
@@ -38,49 +37,43 @@
 .dialog {
   position: relative;
   background: var(--Base-Lightest);
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 1.6rem;
+  border-radius: 0.4rem;
   width: 90%;
-  max-width: 500px;
+  max-width: 580px;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 1rem;
+  display: flex;
+  flex-flow: column;
 }
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 0.1rem solid var(--Base-Light);
 }
-
+.header h2 {
+  text-align: left;
+  margin: auto;
+  width: 100%;
+  color: var(--Main-Color-Base);
+  font-size: 2rem;
+}
 .close_btn {
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 4rem;
   cursor: pointer;
   color: var(--Base-Gray);
 }
-
 .body {
   font-size: 1.6rem;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
 }
-
 .footer {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-}
-
-.hidden {
-  display: none;
-}
-.modal {
-  z-index: 1000;
-}
-.modal:nth-of-type(2) {
-  z-index: 1100;
+  gap: 0.4rem;
+  align-items: center;
 }

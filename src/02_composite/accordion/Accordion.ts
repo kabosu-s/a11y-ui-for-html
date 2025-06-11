@@ -1,17 +1,8 @@
 import './accordion.css';
 
 export interface AccordionProps {
-  /**
-   * アコーディオンのアイテム
-   */
   items: {
-    /**
-     * アコーディオンのヘッダー
-     */
     header: string;
-    /**
-     * アコーディオンのコンテンツ
-     */
     content: string;
     /**
      * アコーディオンが開いているかどうか
@@ -20,7 +11,7 @@ export interface AccordionProps {
   }[];
 }
 
-class Accordion {
+export class Accordion {
   private details: HTMLDetailsElement;
   private trigger: HTMLElement;
   private panel: HTMLElement;
@@ -117,42 +108,32 @@ class Accordion {
 /**
  * アコーディオンコンポーネント
  */
-export const createAccordion = ({ items }: AccordionProps) => {
-  const accordion = document.createElement('div');
-  accordion.className = 'accordion';
+export const createAccordionTemplate = ({ items }: AccordionProps): string => {
+  const indent = (lines: string[], level = 2) =>
+    lines.map(line => " ".repeat(level * 2) + line).join("\n");
 
   const accordionItems = items.map((item) => {
-    const details = document.createElement('details');
-    details.className = 'accordion_item js_accordion';
-    if (item.expanded) {
-      details.setAttribute('open', '');
-    }
+    const lines = [
+      `<details class="accordion_item js_accordion"${item.expanded ? " open" : ""}>`,
+      ...indent([
+        `<summary class="accordion_header">`,
+        `${" ".repeat(4)}${item.header}`,
+        `</summary>`,
+        `<div class="accordion_content">`,
+        `${" ".repeat(4)}<div class="accordion_inner">`,
+        `${" ".repeat(6)}${item.content}`,
+        `${" ".repeat(4)}</div>`,
+        `</div>`,
+      ], 1).split("\n"),
+      `</details>`
+    ];
 
-    const summary = document.createElement('summary');
-    summary.className = 'accordion_header';
-    summary.innerText = item.header;
-
-    const content = document.createElement('div');
-    content.className = 'accordion_content';
-
-    const inner = document.createElement('div');
-    inner.className = 'accordion_inner';
-    inner.innerHTML = item.content;
-
-    content.appendChild(inner);
-    details.appendChild(summary);
-    details.appendChild(content);
-
-    return details;
+    return lines.join("\n");
   });
 
-  accordionItems.forEach(item => accordion.appendChild(item));
-
-  // アコーディオンの初期化
-  accordionItems.forEach((el) => {
-    const acc = new Accordion(el as HTMLDetailsElement);
-    acc.init();
-  });
-
-  return accordion;
-}; 
+  return [
+    `<div class="accordion">`,
+    indent(accordionItems, 1),
+    `</div>`
+  ].join("\n");
+};

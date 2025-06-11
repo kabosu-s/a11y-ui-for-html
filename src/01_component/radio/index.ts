@@ -3,7 +3,7 @@ import { createRadio, type RadioProps } from './Radio';
 
 
 const meta = {
-  title: 'Component/Form/Radio',
+  title: 'Component/フォーム/ラジオボタン',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',

@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/html';
+import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createTextfield, type TextfieldProps } from './Textfield';
 
 const meta = {
-  title: 'Component/Form/Textfield',
+  title: 'Component/フォーム/テキストフィールド',
   tags: ['autodocs'],
   render: (args) => {
     return createTextfield(args as TextfieldProps);

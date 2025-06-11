@@ -7,25 +7,23 @@
   justify-content: space-between;
   width: auto;
   border: 0;
-  outline: 2px solid transparent;
-  outline-offset: -1px;
-  font-weight: 600;
-  line-height: 1.5;
+  outline: 0.1rem solid transparent;
+  outline-offset: -0.1rem;
   transition: all 0.3s ease-out;
   cursor: pointer;
 }
 
 .btn_primary {
   background-color: var(--Main-Color-Dark);
-  color: #fff;
+  color: var(--Base-White);
   &:focus-within {
-    outline: 2px solid var(--Main-Color-Base);
+    outline: 0.1rem solid var(--Main-Color-Base);
     color: var(--Main-Color-Dark);
     background-color: var(--Main-Color-Light);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      outline: 2px solid var(--Main-Color-Base);
+      outline: 0.1rem solid var(--Main-Color-Base);
       color: var(--Main-Color-Dark);
       background-color: var(--Main-Color-Light);
     }
@@ -35,13 +33,13 @@
   background-color: var(--Secondary-Color-Base);
   color: var(--Base-Black);
   &:focus-within {
-    outline: 2px solid var(--Secondary-Color-Base);
+    outline: 0.1rem solid var(--Secondary-Color-Base);
     color: var(--Base-Black);
     background-color: var(--Base-Lightest);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      outline: 2px solid var(--Secondary-Color-Base);
+      outline: 0.1rem solid var(--Secondary-Color-Base);
       color: var(--Base-Black);
       background-color: var(--Base-Lightest);
     }
@@ -52,53 +50,51 @@
   background-color: var(--Base-LightGray);
   color: var(--Base-Black);
   &:focus-within {
-    outline: 2px solid var(--Base-LightGray);
+    outline: 0.1rem solid var(--Base-LightGray);
     color: var(--Base-Black);
     background-color: var(--Base-Lightest);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      outline: 2px solid var(--Base-LightGray);
+      outline: 0.1rem solid var(--Base-LightGray);
       color: var(--Base-Black);
       background-color: var(--Base-Lightest);
     }
   }
 }
 
-
-
 .btn_small {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.4rem;
-  border-radius: 2rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
 }
 .btn_medium {
-  padding: 1.6rem 2.4rem;
+  padding: 0.8rem 1.6rem;
   font-size: 1.6rem;
-  border-radius: 4rem;
+  border-radius: 0.5rem;
 }
 .btn_large {
-  padding: 2.4rem 3.2rem;
+  padding: 1.6rem 2.4rem;
   font-size: 1.8rem;
-  border-radius: 6rem;
+  border-radius: 1rem;
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--Main-Color-Base);
-  outline-offset: 2px;
+  outline: 0.1rem solid var(--Main-Color-Base);
+  outline-offset: 0.1rem;
 }
 .btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
   &:focus-within {
-    outline: 2px solid transparent;
-    color: #fff;
+    outline: 0.1rem solid transparent;
+    color: var(--Base-White);
     background-color: var(--Main-Color-Dark);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-    outline: 2px solid transparent;
-    color: #fff;
+    outline: 0.1rem solid transparent;
+    color: var(--Base-White);
     background-color: var(--Main-Color-Dark);
     }
   }
@@ -107,13 +103,13 @@
   cursor: not-allowed;
   opacity: 0.6;
   &:focus-within {
-    outline: 2px solid var(--Secondary-Color-Base);
+    outline: 0.1rem solid var(--Secondary-Color-Base);
     color: var(--Base-Black);
     background-color: var(--Secondary-Color-Base);
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-    outline: 2px solid var(--Secondary-Color-Base);
+    outline: 0.1rem solid var(--Secondary-Color-Base);
     color: var(--Base-Black);
     background-color: var(--Secondary-Color-Base);
     }

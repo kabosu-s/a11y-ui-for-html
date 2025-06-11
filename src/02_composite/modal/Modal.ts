@@ -4,6 +4,7 @@ import '../../01_component/button/button.css';
 type ModalStackItem = {
   modal: HTMLElement;
   trigger: HTMLElement;
+  defaultOpen: boolean;
 };
 const modalStack: ModalStackItem[] = [];
 const focusableSelectors = [
@@ -20,7 +21,7 @@ const focusableSelectors = [
   '[contenteditable]',
 ].join(', ');
 
-function openModal(modalId: string, triggerEl: HTMLElement) {
+function openModal(modalId: string, triggerEl: HTMLElement, defaultOpen: boolean) {
   const modal = document.getElementById(modalId);
   if (!modal) return;
 
@@ -34,7 +35,7 @@ function openModal(modalId: string, triggerEl: HTMLElement) {
   modal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('no-scroll');
 
-  modalStack.push({ modal, trigger: triggerEl });
+  modalStack.push({ modal, trigger: triggerEl, defaultOpen });
   trapFocus(modal);
 
   const focusables = modal.querySelectorAll<HTMLElement>(focusableSelectors);
@@ -47,7 +48,7 @@ function closeModal(modalId: string) {
   const index = modalStack.findIndex((m) => m.modal.id === modalId);
   if (index === -1) return;
 
-  const { modal, trigger } = modalStack[index];
+  const { modal, trigger, defaultOpen } = modalStack[index];
   modal.classList.remove('visible');
   modal.classList.add('hiding');
   modal.setAttribute('aria-hidden', 'true');
@@ -72,6 +73,15 @@ function closeModal(modalId: string) {
   // フォーカス戻す
   if (trigger && typeof trigger.focus === 'function') {
     setTimeout(() => trigger.focus(), 0);
+  }
+
+  // defaultOpenの値を更新
+  const modalElement = document.getElementById(modalId);
+  if (modalElement) {
+    const openButton = document.querySelector(`[data-open-modal="${modalId}"]`);
+    if (openButton) {
+      openButton.setAttribute('data-default-open', 'false');
+    }
   }
 }
 
@@ -117,9 +127,20 @@ declare global {
 }
 // イベントバインド
 document.addEventListener('DOMContentLoaded', () => {
+  // defaultOpenがtrueのモーダルを初期化
+  document.querySelectorAll<HTMLElement>('.modal').forEach((modal) => {
+    const openButton = document.querySelector<HTMLElement>(`[data-open-modal="${modal.id}"]`);
+    if (openButton && openButton.getAttribute('data-default-open') === 'true') {
+      const triggerEl = openButton;
+      modalStack.push({ modal, trigger: triggerEl, defaultOpen: true });
+      trapFocus(modal);
+    }
+  });
+
   document.querySelectorAll<HTMLElement>('[data-open-modal]').forEach((btn) => {
     const targetId = btn.dataset.openModal!;
-    btn.addEventListener('click', () => openModal(targetId, btn));
+    const defaultOpen = btn.getAttribute('data-default-open') === 'true';
+    btn.addEventListener('click', () => openModal(targetId, btn, defaultOpen));
   });
 
   document.querySelectorAll<HTMLElement>('[data-close-modal]').forEach((btn) => {
@@ -148,15 +169,19 @@ export interface ModalProps {
 
 export const createTemplate = (props: ModalProps) => {
   const { 
-    defaultOpen = false,
+    defaultOpen = true,
     modalId = 'modal1',
   } = props;
 
   return /* html */ `
   <div class="btn_area">
-    <button data-open-modal="${modalId}" class="btn btn_medium btn_primary">モーダルを開く</button>
+    <button 
+      data-open-modal="${modalId}" 
+      data-default-open="${defaultOpen}"
+      class="btn btn_medium btn_primary"
+    >モーダルを開く</button>
   </div>
-    <div id="${modalId}" class="modal ${defaultOpen ? '' : 'hidden'}"
+    <div id="${modalId}" class="modal ${defaultOpen ? 'visible' : ''}"
         role="dialog" aria-modal="true" aria-labelledby="${modalId}Title"
         aria-hidden="${defaultOpen ? 'false' : 'true'}">
       <div class="overlay"></div>
@@ -169,8 +194,7 @@ export const createTemplate = (props: ModalProps) => {
           <p>ここにモーダルの本文が入ります。</p>
         </div>
         <div class="footer">
-          <button class="btn  btn_small btn_primary">決定</button>
-          <button data-close-modal="${modalId}" class="btn btn_small btn_cancel">キャンセル</button>
+          <button data-close-modal="${modalId}" class="btn btn_medium btn_primary">閉じる</button>
         </div>
       </div>
     </div>

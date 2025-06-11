@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/html';
+import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createTemplate, type ModalProps } from "./Modal";
 
 const meta = {
   title: 'Composite/モーダル',
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
@@ -15,20 +14,14 @@ const meta = {
       control: 'boolean',
       description: '最初からモーダルを開いた状態にするか',
     },
-    modalId: {
-      control: 'text',
-      description: 'モーダルのID（他と衝突しないように）',
-      defaultValue: 'modal1',
-    },
   },
 } satisfies Meta<ModalProps>;
 
 export default meta;
 type Story = StoryObj;
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
     defaultOpen: false,
-    modalId: 'modal1',
   },
 };

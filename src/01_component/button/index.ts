@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/html';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/html-vite';
+import { fn } from 'storybook/test';
 import { createButton, type ButtonProps } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

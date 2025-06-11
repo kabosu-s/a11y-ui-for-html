@@ -1,158 +1,154 @@
-import { Title, Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import { Meta, Title,  Subtitle, Description, Controls, Primary, Stories, Source } from '@storybook/addon-docs/blocks';
 import * as HeadStories from './index.stories';
-import * as  Css from "./tab.css";
 
 
 <Meta of={HeadStories} name="コード"/>
 <Title />
-<Canvas />
-## CSS
-<Source code={`
-.tab {
-  font-size: 1.6rem;
-}
-.tab_btns {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 1rem;
-  border-bottom: 2px solid var(--Main-Color-Dark);
-}
-.tab_btn {
-  padding: 1rem;
-  background: #fff;
-  color: var(--Main-Color-Dark);
-  flex-grow: 1;
-  font-weight: bold;
-  border-radius: 0.75rem 0.75rem 0 0;
-  border-top: solid 2px var(--Main-Color-Dark);
-  border-bottom: none;
-  border-left: solid 2px var(--Main-Color-Dark);
-  border-right: solid 2px var(--Main-Color-Dark);
-  transition: all 0.3s ease-out;
-  &:focus-within {
-    color: var(--Main-Color-Dark);
-    background-color: var(--Main-Color-Light);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      color: var(--Main-Color-Dark);
-      background-color: var(--Main-Color-Light);
-    }
-  }
-}
-.tab_btn[aria-selected='true'] {
-  color: #fff;
-  background: var(--Main-Color-Dark);
-}
-.tab_panel[aria-hidden='true'] {
-  display: none;
-}
-.tab_panel {
-  padding: 2rem;
-}
-`}
-language="css"
-/>
+<Subtitle of={HeadStories} />
+<Description of={HeadStories} />
+<Stories />
+
 
 ## JavaScript（jQuery）
 <Source code={`
 $(document).ready(function () {
-	function closeAllTabs($buttons) {
-		$buttons.each(function () {
-			const $btn = $(this);
-			const panelId = $btn.attr("aria-controls");
-			$("#" + panelId)
-				.attr("aria-hidden", "true")
-				.hide();
-			$btn.attr("aria-selected", "false");
-		});
-	}
+  function closeAllTabs($buttons) {
+    $buttons.each(function () {
+      const $btn = $(this);
+      const panelId = $btn.attr("aria-controls");
+      $("#" + panelId)
+        .attr("aria-hidden", "true")
+        .hide();
+      $btn.attr("aria-selected", "false");
+    });
+  }
 
-	function openTab($button) {
-		const panelId = $button.attr("aria-controls");
-		const $panel = $("#" + panelId);
-		$panel.attr("aria-hidden", "false").show();
+  function openTab($button) {
+    const panelId = $button.attr("aria-controls");
+    const $panel = $("#" + panelId);
+    $panel.attr("aria-hidden", "false").show();
+    $panel.attr("tabindex", "-1").focus();
+    $button.attr("aria-selected", "true");
+  }
 
-		$panel.attr("tabindex", "-1").focus();
+  function initTabs() {
+    const $tablists = $('[role="tablist"]');
+    $tablists.each(function () {
+      const $tablist = $(this);
+      const $buttons = $tablist.find('[role="tab"]');
+      // 初期化
+      $tablist.attr("aria-orientation", "horizontal");
+      $buttons.each(function (index) {
+        const $btn = $(this);
+        const panelId = $btn.attr("aria-controls");
+        $btn.attr({
+          "aria-selected": index === 0 ? "true" : "false",
+          tabindex: "0"
+        });
 
-		$button.attr("aria-selected", "true");
-	}
+        $("#" + panelId)
+          .attr("role", "tabpanel")
+          .attr("aria-labelledby", $btn.attr("id"))
+          .attr("aria-hidden", index === 0 ? "false" : "true")
+          .attr("aria-live", "polite") // ここでlive領域に
+          .toggle(index === 0); // 最初のタブだけ表示
+      });
 
-	function initTabs() {
-		const $tablists = $('[role="tablist"]');
+      // クリックイベント
+      $buttons.on("click", function () {
+        const $button = $(this);
+        closeAllTabs($buttons);
+        openTab($button);
+        $button.focus();
+      });
 
-		$tablists.each(function () {
-			const $tablist = $(this);
-			const $buttons = $tablist.find('[role="tab"]');
-
-			// 初期化
-			$tablist.attr("aria-orientation", "horizontal");
-
-			$buttons.each(function (index) {
-				const $btn = $(this);
-				const panelId = $btn.attr("aria-controls");
-
-				$btn.attr({
-					"aria-selected": index === 0 ? "true" : "false",
-					tabindex: "0"
-				});
-
-				$("#" + panelId)
-					.attr("role", "tabpanel")
-					.attr("aria-labelledby", $btn.attr("id"))
-					.attr("aria-hidden", index === 0 ? "false" : "true")
-					.attr("aria-live", "polite") // ここでlive領域に
-					.toggle(index === 0); // 最初のタブだけ表示
-			});
-
-			// クリックイベント
-			$buttons.on("click", function () {
-				const $button = $(this);
-				closeAllTabs($buttons);
-				openTab($button);
-				$button.focus();
-			});
-
-			// キーボードイベント
-			$buttons.on("keydown", function (e) {
-				const $current = $(this);
-				const index = $buttons.index($current);
-				const nextIndex = index;
-
-				switch (e.key) {
-					case "ArrowRight":
-						nextIndex = (index + 1) % $buttons.length;
-						e.preventDefault();
-						$buttons.eq(nextIndex).focus();
-						break;
-					case "ArrowLeft":
-						nextIndex = (index - 1 + $buttons.length) % $buttons.length;
-						e.preventDefault();
-						$buttons.eq(nextIndex).focus();
-						break;
-					case "Home":
-						e.preventDefault();
-						$buttons.eq(0).focus();
-						break;
-					case "End":
-						e.preventDefault();
-						$buttons.eq($buttons.length - 1).focus();
-						break;
-					case "Enter":
-					case " ":
-						e.preventDefault();
-						closeAllTabs($buttons);
-						openTab($current);
-						break;
-					default:
-						break;
-				}
-			});
-		});
-	}
-
-	initTabs();
+      // キーボードイベント
+      $buttons.on("keydown", function (e) {
+        const $current = $(this);
+        const index = $buttons.index($current);
+        const nextIndex = index;
+        switch (e.key) {
+          case "ArrowRight":
+            nextIndex = (index + 1) % $buttons.length;
+            e.preventDefault();
+            $buttons.eq(nextIndex).focus();
+            break;
+          case "ArrowLeft":
+            nextIndex = (index - 1 + $buttons.length) % $buttons.length;
+            e.preventDefault();
+            $buttons.eq(nextIndex).focus();
+            break;
+          case "Home":
+            e.preventDefault();
+            $buttons.eq(0).focus();
+            break;
+          case "End":
+            e.preventDefault();
+            $buttons.eq($buttons.length - 1).focus();
+            break;
+          case "Enter":
+          case " ":
+            e.preventDefault();
+            closeAllTabs($buttons);
+            openTab($current);
+            break;
+          default:
+            break;
+        }
+      });
+    });
+  }
+  initTabs();
 });
 `}
 language="jsx"
+dark
+/>
+
+## CSS
+<Source code={`
+.tab_btns {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    border-bottom: 1px solid var(--Main-Color-Dark);
+}
+.tab_btn {
+    font-size: 1.6rem;
+    padding: 1rem;
+    background: #fff;
+    flex-grow: 1;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-top: solid 1px var(--Base-LightGray);
+    border-bottom: none;
+    border-left: solid 1px var(--Base-LightGray);
+    border-right: solid 1px var(--Base-LightGray);
+    transition: all 0.3s ease-out;
+    &:focus-within {
+      color: var(--Main-Color-Dark);
+      background-color: var(--Main-Color-Light);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--Main-Color-Dark);
+        background-color: var(--Main-Color-Light);
+      }
+    }
+}
+
+.tab_btn[aria-selected='true'] {
+    color: #fff;
+    background: var(--Main-Color-Dark);
+}
+.tab_panel[aria-hidden='true'] {
+    display: none;
+}
+.tab_panel {
+    padding: 2rem;
+    font-size: 1.6rem;
+}
+
+`}
+language="css"
+dark
 />
