@@ -1,104 +1,47 @@
-import { Meta, Title,  Subtitle, Description, Controls, Primary, Stories, Source } from '@storybook/addon-docs/blocks';
+import { Meta, Title,  Subtitle, Description, Controls, Primary, Stories, Markdown, Unstyled } from '@storybook/addon-docs/blocks';
 import * as HeadStories from './index.stories';
-
+import '../../css/style.css';
+export const Check = () => <svg 
+    viewBox="0 0 24 24" 
+    width="20px" 
+    height="20px" 
+    style={{ 
+      inset: '4px auto 0 -28px',
+      background: '#fff',
+      position: 'absolute',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'none',
+      stroke : 'var(--Main-Color-Base)',
+      strokeWidth: '3',
+      strokeLinecap:'round',
+      strokeLinejoin:'round',
+      Zindex: '2'
+    }}
+><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
 
 <Meta of={HeadStories} name="コード"/>
 <Title />
 <Subtitle of={HeadStories} />
 <Description of={HeadStories} />
-<Stories />
+<Primary />
 
 
-## JavaScript（jQuery）
-<Source code={`
+<Unstyled>
+<main className="document">
 
-`}
-language="jsx"
-dark
-/>
+  <div className="sb_section">
+    ### 活用手順
+    各ドキュメントページにそれぞれ達成すべき挙動があるので確認する。<br/>
+    コード例や動きなどを参照し、自身のプロジェクトに応用ください。
 
-## CSS
-<Source code={`
-.btn_area {
-    width: 100%;
-    min-height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-}
-.modal {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-.modal.visible {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
-}
-.modal[aria-hidden="true"] {
-    display: none;
-    opacity: 0;
-    pointer-events: none;
-}
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-.dialog {
-    position: relative;
-    background: var(--Base-Lightest);
-    padding: 1.6rem;
-    border-radius: 0.4rem;
-    width: 90%;
-    max-width: 580px;
-    z-index: 1;
-    display: flex;
-    flex-flow: column;
-}
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 0.1rem solid var(--Base-Light);
-}
-.header h2 {
-    text-align: left;
-    margin: auto;
-    width: 100%;
-    color: var(--Main-Color-Base);
-    font-size: 2rem;
-}
-.close_btn {
-    background: none;
-    border: none;
-    font-size: 4rem;
-    cursor: pointer;
-    color: var(--Base-Gray);
-}
-.body {
-    font-size: 1.6rem;
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-}
-.footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.4rem;
-    align-items: center;
-}
-`}
-language="css"
-dark
-/>
+    #### アクセシビリティチェック項目
+    * <Check />フォーカスが左から右、上から下に順序正しく移動しますか？
+    * <Check />キーボード操作でもマウスと変わりなく操作できますか？
+
+
+  </div>
+
+</main>
+</Unstyled>

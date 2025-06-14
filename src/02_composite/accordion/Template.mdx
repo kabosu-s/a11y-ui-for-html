@@ -1,124 +1,47 @@
-import { Meta, Title,  Subtitle, Description, Controls, Primary, Stories, Source } from '@storybook/addon-docs/blocks';
+import { Meta, Title,  Subtitle, Description, Controls, Primary, Stories, Markdown, Unstyled } from '@storybook/addon-docs/blocks';
 import * as HeadStories from './index.stories';
-
+import '../../css/style.css';
+export const Check = () => <svg 
+    viewBox="0 0 24 24" 
+    width="20px" 
+    height="20px" 
+    style={{ 
+      inset: '4px auto 0 -28px',
+      background: '#fff',
+      position: 'absolute',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'none',
+      stroke : 'var(--Main-Color-Base)',
+      strokeWidth: '3',
+      strokeLinecap:'round',
+      strokeLinejoin:'round',
+      Zindex: '2'
+    }}
+><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
 
 <Meta of={HeadStories} name="コード"/>
 <Title />
 <Subtitle of={HeadStories} />
 <Description of={HeadStories} />
-<Stories />
+<Primary />
 
-### JavaScript（jQuery）
-<Source code={`
-$(function () {
-  $('.js_accordion').each(function () {
-    const $details = $(this);
-    const $trigger = $details.find('summary');
-    const $panel = $trigger.next();
-    let isOpen = $details.prop('open');
-    let isAnimating = false;
 
-    // 初期化
-    $trigger.attr('role', 'button');
-    $panel
-      .attr('aria-hidden', String(!isOpen))
-      .css({
-        overflow: 'hidden',
-        height: isOpen ? 'auto' : 0
-      });
-    $trigger.attr('aria-expanded', String(isOpen));
+<Unstyled>
+<main className="document">
 
-    // 開閉トグル関数
-    const toggleAccordion = () => {
-      if (isAnimating) return;
+  <div className="sb_section">
+    ### 活用手順
+    各ドキュメントページにそれぞれ達成すべき挙動があるので確認する。<br/>
+    コード例や動きなどを参照し、自身のプロジェクトに応用ください。
 
-      isOpen = !isOpen;
-      $details.prop('open', true);
-      $trigger.attr('aria-expanded', String(isOpen));
-      $panel.attr('aria-hidden', String(!isOpen));
+    #### アクセシビリティチェック項目
+    * <Check />フォーカスが左から右、上から下に順序正しく移動しますか？
+    * <Check />キーボード操作でもマウスと変わりなく操作できますか？
 
-      isAnimating = true;
 
-      if (isOpen) {
-        $panel.css('height', 'auto');
-        const height = $panel.prop('scrollHeight') + 'px';
-        $panel.css('height', '0px');
+  </div>
 
-        requestAnimationFrame(() => {
-          $panel
-            .css({ transition: 'height 300ms ease-in-out', height: height })
-            .one('transitionend', function () {
-              $panel.css({ height: 'auto', transition: '' });
-              isAnimating = false;
-            });
-        });
-      } else {
-        const height = $panel.prop('scrollHeight') + 'px';
-        $panel.css('height', height);
-
-        requestAnimationFrame(() => {
-          $panel
-            .css({ transition: 'height 300ms ease-in-out', height: '0px' })
-            .one('transitionend', function () {
-              $details.prop('open', false);
-              $panel.css({ transition: '' });
-              isAnimating = false;
-            });
-        });
-      }
-    };
-
-    // クリックイベント
-    $trigger.on('click', function (e) {
-      e.preventDefault(); // デフォルトの open/close 動作を止める
-      toggleAccordion();
-    });
-
-    // キーボード操作（Enter / Space）
-    $trigger.on('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleAccordion();
-      }
-    });
-  });
-});
-`}
-language="jsx"
-dark
-/>
-
-### CSS
-
-必須部分のみ抜き出したものとなります。色味などは適宜設定ください
-
-<Source code={`
-.accordion_item {
-    overflow: hidden;
-}
-.accordion_header {
-    cursor: pointer;
-    list-style: none;
-    transition: all 0.3s ease-out;
-}
-.accordion_header::-webkit-details-marker {
-    display: none;
-}
-.accordion_header::after {
-    content: '';
-    width: 1.6rem;
-    height: 1.6rem;
-    transition: transform 0.3s ease-out;
-}
-.accordion_item[open] .accordion_header::after {
-    transform: rotate(180deg);
-}
-.accordion_content {
-    overflow: clip;
-    transition: height 0.3s ease;
-    will-change: height;
-}
-`}
-language="css"
-dark
-/>
+</main>
+</Unstyled>

@@ -1,7 +1,7 @@
 .tab {
-	width: 100%;
-	min-width: 600px;
-	margin: 0 auto;
+  width: 100%;
+  min-width: 600px;
+  margin: 0 auto;
 }
 .tab_btns {
   display: flex;

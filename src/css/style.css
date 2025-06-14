@@ -25,3 +25,58 @@ html {
   --NotoSans: 'Noto Sans JP', sans-serif;
   --Monospace: 'Source Code Pro', monospace;
 }
+
+.document {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--Base-Black);
+  margin: auto;
+  h1 {
+    font-size: 3.2rem;
+    margin: 0 0 4rem;
+    color: var(--Main-Color-Base);
+  }
+  h2 {
+    font-size: 2.4rem;
+    margin: 0 0 1.6rem;
+    color: var(--Main-Color-Base);
+  }
+  h3 {
+    font-size: 2rem;
+    margin: 0 0 1.6rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    align-items: stretch;
+  }
+  h3::before {
+    width: 0.8rem;
+    border-radius: 0.4rem;
+    background-color: var(--Main-Color-Base);
+    content: '';
+    display: block;
+  }
+  h4 {
+    font-size: 1.8rem;
+    margin: 0 0 1.6rem;
+    color: var(--Main-Color-Base);
+  }
+  .sb_section {
+    width: 100%;
+    margin-bottom: 6rem;
+  }
+  a {
+    color: var(--Main-Color-Base);
+    &:hover {
+      color: var(--Main-Color-Dark);
+    }
+  }
+  ul {
+
+    li {
+      margin: 0 0 0.8rem;
+      position: relative;
+    }
+  }
+}

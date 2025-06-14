@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/html-vite";
-import { Accordion, createAccordionTemplate, type AccordionProps  } from './Accordion';
+import { createTemplate } from './Accordion.ts';
 
 
 const meta  = {
@@ -7,46 +7,16 @@ const meta  = {
   parameters: {
     layout: 'centered',
     docs: {
-        subtitle: '',
+        subtitle: 'アコーディオン',
         description: {
           component: 'アコーディオンのコーディング例です',
         },
     },
   },
-  render: (args) => {
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = createAccordionTemplate(args as AccordionProps);
-
-  // 初期化処理を明示的に呼び出す
-  const detailsList = wrapper.querySelectorAll<HTMLDetailsElement>('.js_accordion');
-  detailsList.forEach((details) => {
-    const acc = new Accordion(details);
-    acc.init();
-  });
-
-  return wrapper;
-  },
-} satisfies Meta<AccordionProps>;
+  render: () => createTemplate(),
+} satisfies Meta;
 
 export default meta;
-type Story = StoryObj<AccordionProps>;
+type Story = StoryObj;
 
-
-export const Primary: Story = {
-  args: {
-    items: [
-      {
-        header: 'アコーディオン1',
-        content: 'アコーディオン1のコンテンツです。',
-      },
-      {
-        header: 'アコーディオン2',
-        content: 'アコーディオン2のコンテンツです。',
-      },
-      {
-        header: 'アコーディオン3',
-        content: 'アコーディオン3のコンテンツです。',
-      },
-    ],
-  },
-};
+export const Primary: Story = {};

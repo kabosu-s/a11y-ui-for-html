@@ -1,50 +1,58 @@
-import { Meta } from "@storybook/addon-docs/blocks";
+import { Meta, Unstyled } from "@storybook/addon-docs/blocks";
 import './css/style.css';
+export const Check = () => <svg 
+    viewBox="0 0 24 24" 
+    width="20px" 
+    height="20px" 
+    style={{ 
+      inset: '4px auto 0 -28px',
+      background: '#fff',
+      position: 'absolute',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'none',
+      stroke : 'var(--Main-Color-Base)',
+      strokeWidth: '3',
+      strokeLinecap:'round',
+      strokeLinejoin:'round',
+      Zindex: '2'
+    }}
+><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
+
 
 
 <Meta title="Information" />
-<main>
-  <div className='sb-section-title'>
-    # E2 UI SAMPLE について
-    <p>アクセシビリティに配慮したUIコンポーネントのサンプル集です。</p>
+
+<Unstyled>
+<main className="document">
+  # E2 UI SAMPLE について
+  <div className="sb_section">
+  ## 使い方
+    アクセシビリティに配慮したUIコンポーネントのサンプル集です。<br/>
+    アクセシビリティに配慮したUIのコーディング例を掲載しています。コードページに実装例などを掲載していますので、必要に応じて参照、ご利用ください。
   </div>
+  <div className="sb_section">
+    ### 活用手順
+    各ドキュメントページにそれぞれ達成すべき挙動があるので確認する。<br/>
+    コード例や動きなどを参照し、自身のプロジェクトに応用ください。
 
-  <section className="sb-section">
-    <h2 className="sb-section-item-heading">使い方</h2>
-    <div className="sb-section-item-paragraph">
-      <p>アクセシビリティに配慮したUIのコーディング例を掲載しています。コードページにjQueryでの実装例などを掲載していますので、必要に応じて参照、ご利用ください。</p>
-    </div>
-  </section>
-  <section className="sb-section">
-    <h2 className="sb-section-item-heading">フィードバック</h2>
-    <div className="sb-section-item-paragraph">
-      <p>誤字脱字や内容の妥当性、推薦など、さまざまな観点からのフィードバックを歓迎しています。フィードバックを送るには、(検討中.redmineとかにチケット起票)。</p>
-    </div>
-  </section>
+    #### チェック項目例
+    * <Check />フォーカスが左から右、上から下に順序正しく移動しますか？
+    * <Check />キーボード操作でもマウスと変わりなく操作できますか？
+  </div>
+  <div className="sb_section">
+    ### フィードバックについて
+    誤字脱字や内容の妥当性、わかりやすさや事例の推薦など、さまざまな観点からのフィードバックを歓迎しています。<br />
+    フィードバックを送るには（検討中）
+
+  </div>
+  <div className="sb_section">
+    ### 参考文献
+    * <a href="https://docs.google.com/presentation/d/1o1ZcKDV4jjjUZG9iyxqDUYxsUtW0_E6zqPpZg_Jzs3E/edit?slide=id.p1#slide=id.p1" target="_blank">E2 Webアクセシビリティチェックリスト</a>
+    * <a href="https://waic.jp/translations/WCAG22/Understanding/" target="_blank">WCAG 2.2 解説書</a>
+    * <a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank">ARIA Authoring Practices Guide Patterns</a>
+  </div>
 </main>
+</Unstyled>
 
-<style>
-  {`
-  .sb-section {
-    width: 100%;
-    margin-bottom: 8rem;
-  }
-  .sb-section-title {
-    margin-bottom: 8rem;
-  }
-  .sb-section-title h1 {
-    color: var(--Main-Color-Base);
-    margin-bottom: 4rem;
-  }
-  .sb-section-item-heading {
-    padding-bottom: 1.6rem;
-    margin: 0 0 2.4rem;
-    display: block;
-    color: var(--Main-Color-Base);
-  }
-  .sb-section-title p,
-  .sb-section p {
-    font-size: 1.6rem;
-  }
-  `}
-</style>

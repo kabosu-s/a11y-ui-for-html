@@ -1,27 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { createTemplate, type ModalProps } from "./Modal";
+import { createTemplate } from "./Modal.ts";
 
 const meta = {
   title: 'Composite/モーダル',
   parameters: {
     layout: 'fullscreen',
-  },
-  render: (args) => {
-    return createTemplate(args as ModalProps);
-  },
-  argTypes: {
-    defaultOpen: {
-      control: 'boolean',
-      description: '最初からモーダルを開いた状態にするか',
+    docs: {
+        subtitle: 'モーダル',
+        description: {
+          component: 'モーダルのコーディング例です',
+        },
     },
   },
-} satisfies Meta<ModalProps>;
+  render: () =>  createTemplate(),
+} satisfies Meta;
 
 export default meta;
 type Story = StoryObj;
 
-export const Primary: Story = {
-  args: {
-    defaultOpen: false,
-  },
-};
+export const Primary: Story = {};

@@ -1,34 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/html-vite";
-import { createTemplate, type TabProps } from "./tab";
+import { createTemplate } from './Tab.ts';
 
-const meta = {
-  title: "Composite/タブ",
+
+const meta  = {
+  title: 'Composite/タブ',
   parameters: {
     layout: 'centered',
+    docs: {
+        subtitle: 'タブ',
+        description: {
+          component: 'タブのコーディング例です',
+        },
+    },
   },
-  render: (args) => {
-    return createTemplate(args);
-  },
-}satisfies Meta<TabProps>;
+  render: () => createTemplate(),
+} satisfies Meta;
 
 export default meta;
-type Story = StoryObj<TabProps>;
+type Story = StoryObj;
 
-export const Primary: Story = {
-  args: {
-    tabs: [
-      {
-        label: "タブ 1",
-        content: "タブ1のコンテンツです。",
-      },
-      {
-        label: "タブ 2",
-        content: "タブ2のコンテンツです。",
-      },
-      {
-        label: "タブ 3",
-        content: "タブ3のコンテンツです。",
-      },
-    ],
-  },
-};
+export const Primary: Story = {};
