@@ -1,0 +1,12 @@
+/* rootの/css/style.cssで色設定などを行っています。 */
+.menu {
+  display: none;
+}
+.menu.is-open {
+  display: block;
+}
+@media (min-width: 768px) {
+  .menu {
+    display: block !important;
+  }
+}

@@ -18,6 +18,15 @@ export const createTemplate = () => {
         </div>
       </div>
     </details>
+
+    <details class="js_accordion accordion">
+      <summary class="accordion_header">アコーディオンのタイトル</summary>
+      <div class="accordion_content">
+        <div class="accordion_inner">
+          アコーディオンの中身
+        </div>
+      </div>
+    </details>
     `,
   ].join('\n');
 };

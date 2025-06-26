@@ -7,9 +7,9 @@ const meta  = {
   parameters: {
     layout: 'centered',
     docs: {
-        subtitle: 'タブ',
+        subtitle: 'タブのコーディング例です',
         description: {
-          component: 'タブのコーディング例です',
+          component: 'HTMLとJavascript、CSSで動作させてています。',
         },
     },
   },

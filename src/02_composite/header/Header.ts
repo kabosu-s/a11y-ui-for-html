@@ -1,40 +1,25 @@
-import { createButton } from '../../01_component/button/Button';
-import { createHeadlogo } from '../../01_component/logo/Headling';
-import './header.css';
+import './style.css';
+import { Hamburgerset } from './method.js';
 
-export interface HeaderProps {
-  user?: { name: string };
-  onLogin?: () => void;
-  onLogout?: () => void;
-  onCreateAccount?: () => void;
-}
-
-export const createHeader = ({ user, onLogout, onLogin, onCreateAccount }: HeaderProps) => {
-  const header = document.createElement('header');
-  const wrapper = document.createElement('div');
-  wrapper.className = 'sb_header';
-
-  const logo = createHeadlogo({ name: 'LOGO'});
-  wrapper.insertAdjacentHTML('afterbegin', logo);
-  const account = document.createElement('div');
-  account.className = 'sb_account';
-  if (user) {
-    const welcomeMessage = `<span class="welcome">${user.name}</span>`;
-    account.innerHTML = welcomeMessage;
-    account.appendChild(createButton({ size: 'small', label: 'Log out', onClick: onLogout }));
-  } else {
-    account.appendChild(createButton({ size: 'small', label: 'Log in', onClick: onLogin }));
-    account.appendChild(
-      createButton({
-        size: 'small',
-        label: 'Sign up',
-        onClick: onCreateAccount,
-        primary: true,
-      })
-    );
-  }
-  wrapper.appendChild(account);
-  header.appendChild(wrapper);
-
-  return header;
+/**
+ * コンポーネント
+ */
+export const createTemplate = () => {
+  //jsはmethod.jsを参照
+  Hamburgerset();
+  //HTMLの例
+  return [
+    `
+    <div id="navContainer">
+      <button id="hamburgerButton" aria-label="メニューを開く">☰</button>
+      <nav id="navMenu" class="menu" aria-hidden="true">
+      <ul>
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">サービス</a></li>
+        <li><a href="#">会社概要</a></li>
+      </ul>
+      </nav>
+    </div>
+    `,
+  ].join('\n');
 };

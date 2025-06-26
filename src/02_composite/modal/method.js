@@ -22,7 +22,8 @@ class ModalManager {
       '[tabindex]:not([tabindex="-1"])',
       '[contenteditable]'
     ].join(', ');
-
+    this._handleKeydown = this._handleKeydown.bind(this);
+    document.addEventListener('keydown', this._handleKeydown); // ←ここだけでOK
     this._bindEvents();
     this._initDefaultModals();
   }
@@ -59,15 +60,6 @@ class ModalManager {
       });
     });
 
-    document.querySelectorAll('.primary-action').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const modal = btn.closest('.modal');
-        if (modal) {
-          alert(`アクション実行：${modal.id}`);
-          this._close(modal.id);
-        }
-      });
-    });
   }
 
   _open(modalId, triggerEl, defaultOpen = false) {
@@ -130,30 +122,29 @@ class ModalManager {
 
   _trapFocus(modal) {
     const focusables = modal.querySelectorAll(this.focusableSelectors);
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-
-    const handler = (e) => {
-      const topModal = this.modalStack[this.modalStack.length - 1];
-      if (topModal?.modal !== modal) return;
-
-      if (e.key === 'Tab') {
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      } else if (e.key === 'Escape') {
-        this._close(modal.id);
-      }
-    };
-
-    document.removeEventListener('keydown', modal._trapHandler);
-    modal._trapHandler = handler;
-    document.addEventListener('keydown', handler);
+    modal._firstFocusable = focusables[0];
+    modal._lastFocusable = focusables[focusables.length - 1];
   }
+
+  _handleKeydown(e) {
+  const topModal = this.modalStack[this.modalStack.length - 1]?.modal;
+  if (!topModal) return;
+
+  const first = topModal._firstFocusable;
+  const last = topModal._lastFocusable;
+
+  if (e.key === 'Tab') {
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last?.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first?.focus();
+    }
+  } else if (e.key === 'Escape') {
+    this._close(topModal.id);
+  }
+}
 
   _updateAriaForModals() {
     document.querySelectorAll('.modal').forEach((modal) => {

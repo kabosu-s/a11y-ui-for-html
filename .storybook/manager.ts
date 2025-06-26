@@ -1,7 +1,6 @@
 import { addons } from 'storybook/manager-api';
 import { create } from 'storybook/theming';
 
-import logo from './logo.svg';
 
 addons.setConfig({
   theme: create({
@@ -13,7 +12,7 @@ addons.setConfig({
     // 左上のStorybookのロゴが入っていたエリア
     brandTitle: 'E2 UI Samples', // imgタグのalt属性に反映される
     brandUrl: '/?path=/docs/information', // imgをクリックした場合の遷移先
-    brandImage: logo, // 左上の画像
+    brandImage: './logo.svg', // 左上の画像
     brandTarget: '_self', // 遷移の仕方。aタグのtarget属性に反映される
 
     // カラー

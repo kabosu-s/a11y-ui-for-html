@@ -30,7 +30,7 @@ html {
   font-size: 1.6rem;
   line-height: 1.6;
   color: var(--Base-Black);
-  margin: auto;
+  margin: 4rem auto 0;
   h1 {
     font-size: 3.2rem;
     margin: 0 0 4rem;
@@ -38,12 +38,12 @@ html {
   }
   h2 {
     font-size: 2.4rem;
-    margin: 0 0 1.6rem;
+    margin: 0 0 2.4rem;
     color: var(--Main-Color-Base);
   }
   h3 {
     font-size: 2rem;
-    margin: 0 0 1.6rem;
+    margin: 0 0 2.4rem;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

@@ -7,9 +7,9 @@ const meta  = {
   parameters: {
     layout: 'centered',
     docs: {
-        subtitle: 'アコーディオン',
+        subtitle: 'アコーディオンのコーディング例です',
         description: {
-          component: 'アコーディオンのコーディング例です',
+          component: 'HTMLとJavascript、CSSで動作させてています。',
         },
     },
   },

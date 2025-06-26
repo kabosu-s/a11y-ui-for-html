@@ -6,9 +6,9 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     docs: {
-        subtitle: 'モーダル',
+        subtitle: 'モーダルのコーディング例です',
         description: {
-          component: 'モーダルのコーディング例です',
+          component: 'HTMLとJavascript、CSSで動作させてています。',
         },
     },
   },

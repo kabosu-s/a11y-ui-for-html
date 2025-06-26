@@ -12,62 +12,50 @@ export const createTemplate = () => {
   return [`
   <div class="btn_area">
     <button 
-      data-open-modal="modal" 
-      data-default-open="false"
+      data-open-modal="modal1" //対象のモーダルID
+      data-default-open="false" //先に開いておくかどうか
       class="btn btn_medium btn_primary"
     >モーダルを開く</button>
-    <a href="#aa">a</a>
-    <a href="#aa">a</a>
-        <a href="#aa">a</a>
-    <a href="#aa">a</a>
-        <a href="#aa">a</a>
-    <a href="#aa">a</a>
   </div>
   <dialog 
-    id="modal"
+    id="modal1"
     class="modal"
-    aria-labelledby="modal-title"
+    aria-labelledby="modal1_label"
     aria-modal="true"
     aria-hidden="true"
   >
   <div class="overlay"></div>
-    <div class="dialog">
-      <h2>モーダルタイトル</h2>
+    <div class="modal_inner">
+    <button data-close-modal="modal1" class="close_btn" aria-label="モーダルを閉じる">×</button>
+      <h2 id="modal1_label">モーダルタイトル</h2>
         <div class="body">
           <p>ここにモーダルの本文が入ります。</p>
         </div>
-        <div class="button-wrap">
-          <button class="btn-modal btn-outline js-cancel-btn" type="button">キャンセル</button>
-    <button 
-      data-open-modal="modal2" 
-      data-default-open="false"
-      class="btn btn_medium btn_primary"
-    >モーダルを開く</button>
+        <div class="footer button-wrap">
+        <button 
+          data-open-modal="modal2" 
+          data-default-open="false"
+          class="btn btn_medium btn_primary"
+        >モーダル2を開く</button>
         </div>
       </div>
-      <button data-close-modal="modal" class="close_btn" aria-label="閉じる">×</button>
     </div>
   </dialog>
-
-    <dialog 
+  <dialog 
     id="modal2"
     class="modal"
-    aria-labelledby="modal-title"
+    aria-labelledby="modal2_label"
     aria-modal="true"
     aria-hidden="true"
   >
   <div class="overlay"></div>
-    <div class="dialog">
-      <h2>モーダルタイトル</h2>
+    <div class="modal_inner">
+    <button data-close-modal="modal2" class="close_btn" aria-label="モーダルを閉じる">×</button>
+      <h2 id="modal2_label">モーダルタイトル</h2>
         <div class="body">
           <p>ここにモーダルの本文が入ります。</p>
         </div>
-        <div class="button-wrap">
-          <button class="btn-modal btn-outline js-cancel-btn" type="button">キャンセル</button>
-          <button class="btn-modal js-ok-btn" type="button">ログインする</button>
-        </div>
       </div>
-      <button data-close-modal="modal" class="close_btn" aria-label="閉じる">×</button>
     </div>
   </dialog>
   `].join('\n');
