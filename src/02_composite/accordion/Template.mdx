@@ -25,53 +25,98 @@ export const Check = () => <svg
 <Title />
 <Subtitle of={HeadStories} />
 <Description of={HeadStories} />
+
+
+<Primary />
+
 <Unstyled>
 <main className="document">
   <div className="sb_section">
-    ### アクセシビリティチェック項目
-    * <Check /> <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">APG</a>を参考に適切な役割、ステート、プロパティの値を設定する
-    * <Check />キーボード操作でもマウスと変わりなく操作できる
+    ## アクセシビリティチェック項目
+    アコーディオンUIを検証する際は、以下の観点に沿って確認してください。
+
+    ### キーボード操作の確認
+    * <Check /> <b>すべての操作がキーボードで可能か</b>
+
+      開閉ボタンを TabキーやEnter/Spaceキーだけで操作できるか確認してください。
+
+    * <Check /><b>フォーカストラップが起きていないか</b>
+
+        フォーカスがある要素から次に移動できなくなる状況（袋小路）がないことをチェック。
+
+    * <Check /><b>フォーカスが見えるか</b>
+
+      キーボード操作中、今どこが選ばれているか（フォーカスされているか）が枠線などで視覚的にわかるか確認。
+
+    * <Check /><b>フォーカスの移動順が自然か</b>
+
+
+      Tabキーで順に移動したときに、読解しやすい順番でフォーカスが移るかを確認。
+
+    * <Check /><b>予期しない動作が起きないか</b>
+
+      フォーカスを当てただけで勝手にアコーディオンが開いたり、入力してないのに表示が変わるなど、ユーザーの意図しない変化が起きないかを確認。
+
+
+    ### スクリーンリーダーなど支援技術への配慮
+
+    * <Check /><b>見出しやリストに正しいHTMLを使っているか</b>
+
+      構造を伝えるために、`<h2>`や`<ul>`などの意味のあるタグが使われているか確認。
+
+    * <Check /><b>必要に応じてWAI-ARIAが使われているか</b>
+
+      HTMLだけでは伝わりにくいUIの状態（開いてる／閉じてる）を伝えるために、`aria-expanded` などのARIA属性で補足されているかを確認。
+
+    * <Check /><b>情報の関係性が明確になっているか</b>
+
+      タブのラベルとコンテンツ、ボタンとパネルなど、要素同士の関係がプログラム的に分かるようになっているかをチェック。
+
+    * <Check /><b>UIコンポーネントの「名前・役割・状態」が正しく伝わるか</b>
+
+      開閉ボタンに `aria-controls` や `aria-expanded` が設定されていて、スクリーンリーダーがその役割や状態を読み上げられるか確認してください。
+
   </div>
 </main>
 </Unstyled>
 
-<Primary />
-
 
 ### Javascript
 ```javascript
-
-// 起動
+// ページ読み込み後に全アコーディオン要素を初期化
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".js_accordion").forEach((el) => {
     const acc = new Accordion(el);
-    acc.init();
+    acc.init(); // アコーディオン動作の初期設定
   });
 });
 
-// アコーディオンのClass
+// アコーディオンクラス定義
 class Accordion {
   constructor(el) {
-    this.details = el;
-    this.trigger = el.querySelector("summary");
-    this.panel = this.trigger.nextElementSibling;
-    this.isOpen = el.open;
-    this.isAnimating = false;
+    this.details = el; // <details>要素本体
+    this.trigger = el.querySelector("summary"); // トリガーとなる<summary>要素
+    this.panel = this.trigger.nextElementSibling; // 開閉対象のコンテンツ要素
+    this.isOpen = el.open; // 初期状態で開いているか
+    this.isAnimating = false; // アニメーション中のフラグ
   }
 
-  // 初期化
+  // アコーディオン初期化処理
   init() {
-    this._updateAria(this.isOpen);
-    this.trigger.setAttribute("role", "button");
+    this._updateAria(this.isOpen); // ARIA属性の初期設定
+    this.trigger.setAttribute("role", "button"); // アクセシビリティのための役割設定
 
+    // 初期の表示状態を設定
     this.panel.style.overflow = "hidden";
     this.panel.style.height = this.isOpen ? "auto" : "0";
 
+    // クリックで開閉
     this.trigger.addEventListener("click", (e) => {
-      e.preventDefault();
+      e.preventDefault(); // summaryのデフォルト動作を防止
       this.toggle();
     });
 
+    // EnterまたはSpaceキーで開閉（キーボード操作対応）
     this.trigger.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -80,39 +125,43 @@ class Accordion {
     });
   }
 
+  // アコーディオンのトグル処理
   async toggle() {
-    if (this.isAnimating) return;
+    if (this.isAnimating) return; // アニメーション中は無視
 
     this.isOpen = !this.isOpen;
-    this.details.open = true; // open属性を先に立てる
+    this.details.open = true; // 開く前提で属性を一旦trueにする（閉じる場合もあとでfalseに）
 
-    this._updateAria(this.isOpen);
+    this._updateAria(this.isOpen); // ARIA属性を更新
     this.isAnimating = true;
 
     if (this.isOpen) {
-      await this._expand();
+      await this._expand(); // 開く処理
     } else {
-      await this._collapse();
-      this.details.open = false; // 閉じた後にopenをfalse
+      await this._collapse(); // 閉じる処理
+      this.details.open = false; // 完全に閉じた後にopen属性をfalseに戻す
     }
 
     this.isAnimating = false;
   }
 
+  // ARIA属性の更新（アクセシビリティ対応）
   _updateAria(isOpen) {
     this.trigger.setAttribute("aria-expanded", String(isOpen));
     this.panel.setAttribute("aria-hidden", String(!isOpen));
   }
 
+  // パネルを展開（アニメーション付き）
   _expand() {
-    this.panel.style.height = "auto";
+    this.panel.style.height = "auto"; // 高さを一旦自動にしてスクロール高さを取得
     const height = this.panel.scrollHeight + "px";
-    this.panel.style.height = "0";
+    this.panel.style.height = "0"; // アニメーションのため高さを0に戻す
     requestAnimationFrame(() => {
       this.panel.style.transition = "height 300ms ease-in-out";
       this.panel.style.height = height;
     });
 
+    // アニメーション完了後に高さをautoに戻し、transitionを解除
     return new Promise((res) => {
       this.panel.addEventListener("transitionend", () => {
         this.panel.style.height = "auto";
@@ -122,14 +171,16 @@ class Accordion {
     });
   }
 
+  // パネルを折りたたむ（アニメーション付き）
   _collapse() {
-    const height = this.panel.scrollHeight + "px";
-    this.panel.style.height = height;
+    const height = this.panel.scrollHeight + "px"; // 現在の高さを取得
+    this.panel.style.height = height; // 現在の高さに設定（状態をリセット）
     requestAnimationFrame(() => {
       this.panel.style.transition = "height 300ms ease-in-out";
-      this.panel.style.height = "0";
+      this.panel.style.height = "0"; // 高さを0にして閉じるアニメーション
     });
 
+    // アニメーション完了後にtransitionを解除
     return new Promise((res) => {
       this.panel.addEventListener("transitionend", () => {
         this.panel.style.transition = "";
@@ -138,4 +189,5 @@ class Accordion {
     });
   }
 }
+
 ```

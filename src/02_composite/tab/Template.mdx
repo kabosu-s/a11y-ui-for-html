@@ -29,7 +29,9 @@ export const Check = () => <svg
 <Unstyled>
 <main className="document">
   <div className="sb_section">
-    ### アクセシビリティチェック項目
+    ## アクセシビリティチェック項目
+
+    ### キーボード操作性に関する確認
     * <Check /> <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">APG</a>を参考に適切な役割、ステート、プロパティの値を設定する
     * <Check /> キーボード操作でもマウスと変わりなく操作できる
     * <Check /> 切り替え後のコンテンツにフォーカスも移動する
@@ -41,94 +43,105 @@ export const Check = () => <svg
 
 ### Javascript
 ```javascript
-// 起動
-  document.addEventListener('DOMContentLoaded', () => {
-    const tablists = document.querySelectorAll('[role="tablist"]');
-    tablists.forEach(tablist => new Tab(tablist));
-  });
+// 起動処理：DOMContentLoaded後に全タブリストを初期化
+document.addEventListener('DOMContentLoaded', () => {
+  const tablists = document.querySelectorAll('[role="tablist"]');
+  tablists.forEach(tablist => new Tab(tablist)); // 各タブリストごとにTabクラスをインスタンス化
+});
 
-// タブのClass
+// タブUIを制御するクラス
 class Tab {
   constructor(tablist) {
-    this.tablist = tablist;
-    this.buttons = Array.from(tablist.querySelectorAll('[role="tab"]'));
-    this.tablist.setAttribute('aria-orientation', 'horizontal');
-    this.init();
+    this.tablist = tablist; // <div role="tablist"> 要素
+    this.buttons = Array.from(tablist.querySelectorAll('[role="tab"]')); // 各タブボタン
+
+    this.tablist.setAttribute('aria-orientation', 'horizontal'); // 横並びであることを明示
+    this.init(); // 初期化
   }
 
+  // 初期化処理：タブとパネルのARIA設定・イベント登録
   init() {
     this.buttons.forEach((btn, index) => {
-      const panelId = btn.getAttribute('aria-controls');
+      const panelId = btn.getAttribute('aria-controls'); // 対応するtabpanelのID
       const panel = document.getElementById(panelId);
 
-      // 初期状態のセット
-      btn.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-      btn.setAttribute('tabindex', '0');
+      // 初期状態のARIA属性と見た目を設定
+      btn.setAttribute('aria-selected', index === 0 ? 'true' : 'false'); // 最初のタブを選択状態に
+      btn.setAttribute('tabindex', '0'); // キーボード操作対象に設定
 
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('aria-labelledby', btn.id);
-      panel.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
-      panel.setAttribute('aria-live', 'polite');
+      panel.setAttribute('aria-hidden', index === 0 ? 'false' : 'true'); // 非表示パネルはhidden
+      panel.setAttribute('aria-live', 'polite'); // 読み上げに優しく反応（画面リーダー）
       panel.style.display = index === 0 ? '' : 'none';
 
-      // イベント登録
+      // クリックでタブ切り替え
       btn.addEventListener('click', () => {
-        this.closeAllTabs();
-        this.openTab(btn);
-        btn.focus();
+        this.closeAllTabs();    // 全て非表示にして
+        this.openTab(btn);      // 対象だけ表示
+        btn.focus();            // キーボード操作にも対応
       });
 
+      // キーボード操作に対応
       btn.addEventListener('keydown', (e) => this.handleKeydown(e, btn));
     });
   }
 
+  // 全てのタブとパネルを非表示にする
   closeAllTabs() {
     this.buttons.forEach((btn) => {
       const panelId = btn.getAttribute('aria-controls');
       const panel = document.getElementById(panelId);
+
       panel.setAttribute('aria-hidden', 'true');
       panel.style.display = 'none';
       btn.setAttribute('aria-selected', 'false');
     });
   }
 
+  // 指定されたタブボタンと対応するパネルを表示
   openTab(button) {
     const panelId = button.getAttribute('aria-controls');
     const panel = document.getElementById(panelId);
 
     panel.setAttribute('aria-hidden', 'false');
     panel.style.display = '';
-    panel.setAttribute('tabindex', '-1');
-    panel.focus();
+    panel.setAttribute('tabindex', '-1'); // フォーカス移動可能にする
+    panel.focus(); // コンテンツ内にフォーカスを移す（スクリーンリーダー等のため）
 
     button.setAttribute('aria-selected', 'true');
   }
 
+  // キーボード操作（左右・Home・End・Enter/Space）でタブ切り替え対応
   handleKeydown(e, btn) {
     const index = this.buttons.indexOf(btn);
     let nextIndex = index;
 
     switch (e.key) {
-      case 'ArrowRight':
+      case 'ArrowRight': // →キーで次のタブに移動（ループ）
         nextIndex = (index + 1) % this.buttons.length;
         e.preventDefault();
         this.buttons[nextIndex].focus();
         break;
-      case 'ArrowLeft':
+
+      case 'ArrowLeft': // ←キーで前のタブに移動（ループ）
         nextIndex = (index - 1 + this.buttons.length) % this.buttons.length;
         e.preventDefault();
         this.buttons[nextIndex].focus();
         break;
-      case 'Home':
+
+      case 'Home': // Homeキーで最初のタブへ
         e.preventDefault();
         this.buttons[0].focus();
         break;
-      case 'End':
+
+      case 'End': // Endキーで最後のタブへ
         e.preventDefault();
         this.buttons[this.buttons.length - 1].focus();
         break;
+
       case 'Enter':
-      case ' ':
+      case ' ': // EnterかSpaceでアクティブ化
         e.preventDefault();
         this.closeAllTabs();
         this.openTab(btn);

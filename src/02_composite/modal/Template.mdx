@@ -40,17 +40,16 @@ export const Check = () => <svg
 
 ### Javascript
 ```javascript
-
-//起動
+// ページ読み込み後にモーダルマネージャーを初期化
 document.addEventListener('DOMContentLoaded', () => {
   new ModalManager();
 });
 
-// モーダルのClass
+// モーダル管理クラス
 class ModalManager {
   constructor() {
-    this.modalStack = [];
-    this.focusableSelectors = [
+    this.modalStack = []; // 現在開いているモーダルのスタック
+    this.focusableSelectors = [ // フォーカストラップ対象のセレクタ一覧
       'a[href]',
       'area[href]',
       'input:not([disabled])',
@@ -63,12 +62,18 @@ class ModalManager {
       '[tabindex]:not([tabindex="-1"])',
       '[contenteditable]'
     ].join(', ');
+
+    // キーボードイベントハンドラをthisにバインド
     this._handleKeydown = this._handleKeydown.bind(this);
-    document.addEventListener('keydown', this._handleKeydown); // ←ここだけでOK
-    this._bindEvents();
-    this._initDefaultModals();
+
+    // Escape／Tabキー制御用のイベントリスナーを1つだけグローバルに登録
+    document.addEventListener('keydown', this._handleKeydown);
+
+    this._bindEvents();         // 開閉ボタンにイベントを紐づけ
+    this._initDefaultModals();  // 初期表示モーダルの自動起動処理
   }
 
+  // 初期表示用モーダルを自動的に開く（data-default-open）
   _initDefaultModals() {
     document.querySelectorAll('.modal').forEach((modal) => {
       const btn = document.querySelector(`[data-open-modal="${modal.id}"]`);
@@ -78,7 +83,9 @@ class ModalManager {
     });
   }
 
+  // モーダルの開閉用ボタンやオーバーレイにイベントをバインド
   _bindEvents() {
+    // モーダルを開くボタン
     document.querySelectorAll('[data-open-modal]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const modalId = btn.dataset.openModal;
@@ -87,6 +94,7 @@ class ModalManager {
       });
     });
 
+    // モーダルを閉じるボタン
     document.querySelectorAll('[data-close-modal]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const modalId = btn.dataset.closeModal;
@@ -94,99 +102,113 @@ class ModalManager {
       });
     });
 
+    // オーバーレイ（背景）クリックでもモーダルを閉じる
     document.querySelectorAll('.overlay').forEach((overlay) => {
       const modal = overlay.closest('.modal');
       overlay.addEventListener('click', () => {
         if (modal) this._close(modal.id);
       });
     });
-
   }
 
+  // モーダルを開く処理
   _open(modalId, triggerEl, defaultOpen = false) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
+    modal.classList.remove('hidden');      // hiddenクラスを削除（非表示解除）
+    modal.style.display = 'flex';          // flexで表示（初期レイアウト確保）
     requestAnimationFrame(() => {
-      modal.classList.add('visible');
+      modal.classList.add('visible');      // アニメーション用クラスを追加
     });
 
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('no-scroll');
+    modal.setAttribute('aria-hidden', 'false'); // アクセシビリティ向け設定
+    document.body.classList.add('no-scroll');   // 背景スクロール防止
 
-    this.modalStack.push({ modal, trigger: triggerEl, defaultOpen });
-    this._trapFocus(modal);
+    this.modalStack.push({ modal, trigger: triggerEl, defaultOpen }); // スタックに追加
+    this._trapFocus(modal); // フォーカストラップ対象を設定
 
+    // フォーカス可能要素があれば最初の要素にフォーカスを当てる
     const focusables = modal.querySelectorAll(this.focusableSelectors);
     if (focusables.length > 0) focusables[0].focus();
 
-    this._updateAriaForModals();
+    this._updateAriaForModals(); // 他モーダルとのARIA整合性を確保
   }
 
+  // モーダルを閉じる処理
   _close(modalId) {
     const index = this.modalStack.findIndex((m) => m.modal.id === modalId);
     if (index === -1) return;
 
     const { modal, trigger } = this.modalStack[index];
-    this.modalStack.splice(index, 1);
+    this.modalStack.splice(index, 1); // スタックから除去
 
-    modal.classList.remove('visible');
-    modal.classList.add('hiding');
+    modal.classList.remove('visible');  // アニメーションクラスを削除
+    modal.classList.add('hiding');      // フェードアウト用クラス追加
     modal.setAttribute('aria-hidden', 'true');
     modal.style.display = 'none';
-    document.removeEventListener('keydown', modal._trapHandler);
 
+    document.removeEventListener('keydown', modal._trapHandler); // 古いリスナー解除（予防的）
+
+    // 全て閉じたら背景スクロールを許可
     if (this.modalStack.length === 0) {
       document.body.classList.remove('no-scroll');
     } else {
+      // 他に開いてるモーダルがある場合はそちらにフォーカストラップを再適用
       const topModal = this.modalStack[this.modalStack.length - 1];
       this._trapFocus(topModal.modal);
     }
 
-    this._updateAriaForModals();
+    this._updateAriaForModals(); // ARIA属性を再調整
 
+    // トリガー要素にフォーカスを戻す（アクセシビリティ対応）
     if (trigger && typeof trigger.focus === 'function') {
-      setTimeout(() => trigger.focus(), 0);
+      setTimeout(() => trigger.focus(), 0); // 次のフレームで安全にフォーカス
     }
 
+    // defaultOpen属性をfalseにして再開防止
     const openBtn = document.querySelector(`[data-open-modal="${modalId}"]`);
     if (openBtn) {
       openBtn.setAttribute('data-default-open', 'false');
     }
 
+    // アニメーション用のクラスを遅延で削除（CSSトランジション考慮）
     setTimeout(() => {
       modal.classList.remove('hiding');
     }, 300);
   }
 
+  // フォーカストラップ設定：モーダル内でTab移動をループさせるために必要な要素を取得
   _trapFocus(modal) {
     const focusables = modal.querySelectorAll(this.focusableSelectors);
     modal._firstFocusable = focusables[0];
     modal._lastFocusable = focusables[focusables.length - 1];
   }
 
+  // TabキーとEscapeキーのキーボード操作をハンドリング
   _handleKeydown(e) {
-  const topModal = this.modalStack[this.modalStack.length - 1]?.modal;
-  if (!topModal) return;
+    const topModal = this.modalStack[this.modalStack.length - 1]?.modal;
+    if (!topModal) return;
 
-  const first = topModal._firstFocusable;
-  const last = topModal._lastFocusable;
+    const first = topModal._firstFocusable;
+    const last = topModal._lastFocusable;
 
-  if (e.key === 'Tab') {
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last?.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first?.focus();
+    // Tabキーのフォーカストラップ制御
+    if (e.key === 'Tab') {
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus(); // Shift + Tab: 最後の要素に戻る
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus(); // Tab: 最初に戻る
+      }
+    } else if (e.key === 'Escape') {
+      // Escapeキーでモーダルを閉じる
+      this._close(topModal.id);
     }
-  } else if (e.key === 'Escape') {
-    this._close(topModal.id);
   }
-}
 
+  // モーダルのスタックに応じたARIAの更新（画面リーダー向け）
   _updateAriaForModals() {
     document.querySelectorAll('.modal').forEach((modal) => {
       const isTop = this.modalStack[this.modalStack.length - 1]?.modal === modal;

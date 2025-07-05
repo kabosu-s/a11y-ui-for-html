@@ -11,7 +11,7 @@ export const createTemplate = () => {
   return [
     `
     <div id="navContainer">
-      <button id="hamburgerButton" aria-label="メニューを開く">☰</button>
+      <button id="hamburgerButton" aria-label="メニューを開く"><span></span></button>
       <nav id="navMenu" class="menu" aria-hidden="true">
       <ul>
         <li><a href="#">ホーム</a></li>
